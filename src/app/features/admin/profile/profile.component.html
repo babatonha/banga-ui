@@ -1,3 +1,11 @@
+
+
 <div class="card flex justify-content-center">
-  <p-inputSwitch [(ngModel)]="checked" (onChange)="changeTheme(checked ? 'dark':'light')" />
+  <p-toggleButton 
+      onIcon={{themeIcon}}
+      offIcon={{themeIcon}}
+      [(ngModel)]="checked" 
+      onLabel={{label}}
+      offLabel={{label}}
+      (onChange)="changeTheme(checked ? 'dark':'light')" />
 </div>

@@ -58,9 +58,9 @@ export class NavBarComponent implements OnInit {
           routerLink: 'profile'
       },
       {
-        label: 'Settings',
-        icon: 'pi pi-fw pi-cog',
-        routerLink: 'forgot-password'
+        label: 'My Properties',
+        icon: 'pi pi-fw pi-warehouse',
+        routerLink: 'my-property'
     },
 
       {

@@ -54,8 +54,6 @@ export class ForgotPasswordComponent implements OnInit {
         next: () =>{
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Password recovered, Please check your email!' });
           this.router.navigate(['/change-password']);
-        }, error: () => {
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'User not found!' });
         }
       })
 

@@ -1,0 +1,77 @@
+<form [formGroup]="stepTwoForm" (ngSubmit)="onSubmit()">
+  <div class="field">
+    <label for="price" [style]="{width: '100%', position:'block'}">Price*</label>
+    <p-inputNumber 
+      formControlName="price"
+      inputId="currency-us" 
+      mode="currency" 
+      currency="USD" 
+      name="price"
+      locale="en-US" 
+      styleClass="w-full"
+      class="w-full"
+      [style]="{width: '100%'}" />
+    <small
+      *ngIf="(stepTwoForm.controls['price'].dirty || stepTwoForm.controls['price'].touched)"
+      class="block p-error"
+    >
+      <div *ngIf="stepTwoForm.controls['price'].errors?.['required']">Price is required.</div>
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="squareMetres" [style]="{width: '100%', position:'block'}">Square Metres</label>
+      <p-inputNumber inputId="integeronly" formControlName="squareMetres" styleClass="w-full" class="w-full"/>
+      <small
+      *ngIf="(stepTwoForm.controls['squareMetres'].dirty || stepTwoForm.controls['squareMetres'].touched)"
+      class="block p-error"
+    >
+      <div *ngIf="stepTwoForm.controls['squareMetres'].errors?.['required']">Square metres is required.</div>
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="amenities" [style]="{width: '100%', position:'block'}">Amenities</label>
+    <p-multiSelect 
+      [style]="{width: '100%'}"
+      [options]="amenitiesList" 
+      formControlName="amenities" 
+      optionLabel="name" 
+      placeholder="Select Cities" />
+  </div>
+
+  <div class="field">
+    <label for="numberOfRooms" [style]="{width: '100%', position:'block'}">Number Of Rooms</label>
+      <p-inputNumber inputId="integeronly" formControlName="numberOfRooms" styleClass="w-full" class="w-full"/>
+  </div>
+
+  <div class="field">
+    <label for="numberOfBathrooms" [style]="{width: '100%', position:'block'}">Number Of Bath Rooms</label>
+      <p-inputNumber inputId="integeronly" formControlName="numberOfBathrooms"styleClass="w-full" class="w-full" />
+  </div>
+
+  <div class="field">
+    <label for="parkingSpots" [style]="{width: '100%', position:'block'}">Number Of Rooms</label>
+      <p-inputNumber class="w-full" inputId="integeronly" formControlName="parkingSpots" styleClass="w-full" class="w-full"/>
+  </div>
+
+  <div class="field">
+    <label for="description" >Description </label>
+    <textarea 
+        rows="3"
+        cols="30"
+        class="w-full"  
+        pInputTextarea 
+        formControlName="description">
+    </textarea>
+    <small
+    *ngIf="(stepTwoForm.controls['description'].dirty || stepTwoForm.controls['description'].touched)"
+    class="block p-error"
+  >
+    <div *ngIf="stepTwoForm.controls['description'].errors?.['required']">description is required.</div>
+  </small>
+  </div>
+
+</form>
+
+<p-toast />

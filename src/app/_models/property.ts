@@ -8,7 +8,6 @@ export interface Property{
     assignedLawyerName : string;
     propertyTypeId : number;
     propertyTypeName : string;
-    squreMeters: number;
     suburbId: number;
     cityId : number;
     cityName : string;
@@ -28,4 +27,6 @@ export interface Property{
     isActive: boolean;
     isSold: boolean;
     isDeleted: boolean;
+    registrationTypeId: number;
+    squareMetres : number;
 }

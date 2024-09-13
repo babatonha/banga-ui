@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { PropertyNewComponent } from './property-new.component';
+import { StepOneComponent } from './step-one.component';
 
-describe('PropertyNewComponent', () => {
-  let component: PropertyNewComponent;
-  let fixture: ComponentFixture<PropertyNewComponent>;
+describe('StepOneComponent', () => {
+  let component: StepOneComponent;
+  let fixture: ComponentFixture<StepOneComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PropertyNewComponent ]
+      declarations: [ StepOneComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PropertyNewComponent);
+    fixture = TestBed.createComponent(StepOneComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

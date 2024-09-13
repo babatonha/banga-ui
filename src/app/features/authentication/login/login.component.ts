@@ -52,9 +52,6 @@ export class LoginComponent implements OnInit {
         next: () =>{
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Successfully logged in' });
           this.router.navigate(['/home']);
-        },
-        error: error => {
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: "Username or password is incorrect" });
         }
       })
     }

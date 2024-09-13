@@ -1,4 +1,4 @@
-export interface RegistrationType{
+export interface Amenities{
     id: number;
     name: string; 
 }

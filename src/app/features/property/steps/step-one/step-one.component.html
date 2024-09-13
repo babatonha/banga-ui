@@ -1,0 +1,118 @@
+<form [formGroup]="stepOneForm" (ngSubmit)="onSubmit()">
+
+
+    <div class="field">
+      <label for="propertyTypeId" class="block mt-2">Property Type*</label>
+      <p-dropdown 
+        [options]="propertyTypes" 
+        placeholder="Select a Property Type" 
+        formControlName="propertyTypeId"
+        [editable]="true" 
+        optionLabel="name"
+        [style]="{width: '100%'}"
+        (onChange)="onPropertyTypeChange($event)" />
+    
+      <small
+        *ngIf="(stepOneForm.controls['propertyTypeId'].dirty || stepOneForm.controls['propertyTypeId'].touched)"
+        class="block p-error"
+      >
+        <div *ngIf="stepOneForm.controls['propertyTypeId'].errors?.['required']">Property Type is required.</div>
+      </small>
+    </div>
+
+    <div class="field">
+      <label for="registrationTypeId" class="block mt-2">Registration Type*</label>
+      <p-dropdown 
+        [options]="registrationTypes" 
+        placeholder="Select a Registration Type" 
+        formControlName="registrationTypeId"
+        [editable]="true" 
+        optionLabel="name"
+        [style]="{width: '100%'}"
+        (onChange)="onPropertyTypeChange($event)" />
+    
+      <small
+        *ngIf="(stepOneForm.controls['registrationTypeId'].dirty || stepOneForm.controls['registrationTypeId'].touched)"
+        class="block p-error"
+      >
+        <div *ngIf="stepOneForm.controls['registrationTypeId'].errors?.['required']">Property Type is required.</div>
+      </small>
+    </div>
+
+    <div class="field">
+      <label for="assignedLawyerId" class="block mt-2">Law Firm*</label>
+      <p-dropdown 
+        [options]="lawFirms" 
+        placeholder="Select a Law Firm" 
+        formControlName="assignedLawyerId"
+        [editable]="true" 
+        optionLabel="lawFirmName"
+        [style]="{width: '100%'}"
+        (onChange)="onLawFirmChange($event)" />
+    
+      <small
+        *ngIf="(stepOneForm.controls['assignedLawyerId'].dirty || stepOneForm.controls['assignedLawyerId'].touched)"
+        class="block p-error"
+      >
+        <div *ngIf="stepOneForm.controls['assignedLawyerId'].errors?.['required']">Law firm is required.</div>
+      </small>
+    </div>
+
+
+    <div class="field">
+      <label for="cityId" class="block mt-2">City*</label>
+      <p-dropdown 
+        [options]="cities" 
+        placeholder="Select City" 
+        formControlName="cityId"
+        [editable]="true" 
+        optionLabel="name"
+        [style]="{width: '100%'}"
+        (onChange)="onCityChange($event)" />
+    
+      <small
+        *ngIf="(stepOneForm.controls['cityId'].dirty || stepOneForm.controls['cityId'].touched)"
+        class="block p-error"
+      >
+        <div *ngIf="stepOneForm.controls['cityId'].errors?.['required']">City is required.</div>
+      </small>
+    </div>
+
+    <!-- <div class="field">
+      <label for="suburbId" class="block mt-2">Surburb*</label>
+      <p-dropdown 
+        [options]="suburbs" 
+        placeholder="Select Surburb" 
+        formControlName="suburbId"
+        [editable]="true" 
+        optionLabel="name"
+        [style]="{width: '100%'}"
+        (onChange)="onSurburbChange($event)" />
+    
+      <small
+        *ngIf="(stepOneForm.controls['suburbId'].dirty || stepOneForm.controls['suburbId'].touched)"
+        class="block p-error"
+      >
+        <div *ngIf="stepOneForm.controls['suburbId'].errors?.['required']">Surburb is required.</div>
+      </small>
+    </div> -->
+
+    <div class="field">
+      <label for="address">Address*</label>
+      <input
+        type="text"
+        pInputText
+        formControlName="address"
+        class="w-full"
+        name="address"
+      />
+      <small
+        *ngIf="stepOneForm.controls['address'].dirty || stepOneForm.controls['address'].touched"
+        class="block p-error"
+      >
+        <div *ngIf="stepOneForm.controls['address'].errors?.['required']">Address is required.</div>
+      </small>
+    </div>
+</form>
+
+<p-toast />
