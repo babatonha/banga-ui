@@ -1,0 +1,66 @@
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()"  class="center-container" >
+  <p-card header="Register" [style]="{ width: '360px' }">
+    <div class="field">
+      <label for="userName">Username</label>
+      <input
+        type="text"
+        pInputText
+        formControlName="userName"
+        class="w-full"
+        name="userName"
+      />
+      <small
+        *ngIf=" (userName.dirty || userName.touched)"
+        class="block p-error"
+      >
+        <div *ngIf="userName.errors?.['required']">Username is required.</div>
+      </small>
+    </div>
+    <div class="field">
+      <label for="email">Email</label>
+      <input
+        type="text"
+        pInputText
+        formControlName="email"
+        class="w-full"
+        name="email"
+      />
+      <small
+        *ngIf="email.invalid && (email.dirty || email.touched)"
+        class="block p-error"
+      >
+        <div *ngIf="email.errors?.['required']">Email is required.</div>
+        <div *ngIf="email.errors?.['email']">Email should be valid</div>
+      </small>
+    </div>
+    <div class="field">
+      <label for="password">Password</label>
+      <input
+        type="password"
+        pInputText
+        formControlName="password"
+        class="w-full"
+        name="password"
+      />
+      <small
+        *ngIf="password.invalid && (password.dirty || password.touched)"
+        class="block p-error"
+      >
+        <div *ngIf="password.errors?.['required']">Password is required.</div>
+      </small>
+    </div>
+    <p-button
+      label="Sign Up"
+      styleClass="w-full"
+      [disabled]="myForm.invalid"
+      type="submit"
+    ></p-button>
+    
+    <div style="font-size: 10px; padding-top: 0.5rem;">
+ 
+      <a>Already have Account ? </a><mat-label class="redirect-link" routerLink="/login">Login</mat-label> 
+    </div>
+  </p-card>
+</form>
+
+<p-toast />

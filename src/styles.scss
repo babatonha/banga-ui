@@ -1,1 +1,24 @@
 /* You can add global styles to this file, and also import other style files */
+//@import "./themes/light.css";
+html, body { height: 99%; font-size: small;}
+    
+.center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80%; /* Full viewport height */
+    }
+
+    .p-card-header {
+    text-align: center; /* Center the header text */
+    }
+
+    .redirect-link{
+    font-style: bold; 
+    }
+
+    .redirect-link:hover {
+    cursor: pointer;
+    color: #3F51B5;
+    }
+

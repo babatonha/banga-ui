@@ -1,0 +1,12 @@
+<div class="flex flex-column gap-2">
+  <label for="username">{{label}}</label>
+  <input 
+    [class.is-invalid]="control.touched && control.invalid"
+    type={{type}}
+    [formControl]="control"  
+    matInput 
+    placeholder={{label}} />
+  <small *ngIf="control.errors?.['required']">Please enter a {{label}}</small>
+  <small *ngIf="control.errors?.['pattern']">{{label}} should have min of 4 and max 10 characters</small>
+  <small *ngIf="control.errors?.['email']">Wrong email format</small>
+</div>

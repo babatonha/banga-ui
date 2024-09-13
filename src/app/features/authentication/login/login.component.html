@@ -1,0 +1,49 @@
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()"  class="center-container" >
+  <p-card header="Login" [style]="{ width: '360px' }">
+    <div class="field">
+      <label for="userName">Username</label>
+      <input
+        type="text"
+        pInputText
+        formControlName="userName"
+        class="w-full"
+        name="userName"
+      />
+      <small
+        *ngIf=" (userName.dirty || userName.touched)"
+        class="block p-error"
+      >
+        <div *ngIf="userName.errors?.['required']">Username is required.</div>
+      </small>
+    </div>
+    <div class="field">
+      <label for="password">Password</label>
+      <input
+        type="password"
+        pInputText
+        formControlName="password"
+        class="w-full"
+        name="password"
+      />
+      <small
+        *ngIf="password.invalid && (password.dirty || password.touched)"
+        class="block p-error"
+      >
+        <div *ngIf="password.errors?.['required']">Password is required.</div>
+      </small>
+    </div>
+    <p-button
+      label="Sign In"
+      styleClass="w-full"
+      [disabled]="myForm.invalid"
+      type="submit"
+    ></p-button>
+    <div style="font-size: 10px; padding-top: 0.5rem;">
+ 
+      <a>Dont have Account ? </a><mat-label class="redirect-link" routerLink="/register">Register</mat-label> ||
+      <a> Forgot Password ? </a><mat-label class="redirect-link" routerLink="/forgot-password">Recover</mat-label>
+    </div>
+  </p-card>
+</form>
+
+<p-toast />
