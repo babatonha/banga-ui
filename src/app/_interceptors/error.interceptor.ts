@@ -6,7 +6,6 @@ import {
  } from "@angular/common/http";
 import { inject } from "@angular/core";
 import { Router } from "@angular/router";
-import { NgxSpinnerService } from "ngx-spinner";
 import { MessageService } from "primeng/api";
 
  import { catchError, throwError } from "rxjs";
@@ -19,12 +18,11 @@ import { MessageService } from "primeng/api";
 
   //const toastr = inject(MessageService);
   const router = inject(Router);
-  const spinnerService = inject(NgxSpinnerService);
+
   
   return next(req).pipe(
    catchError((error: HttpErrorResponse) => {
      if(error){
-      spinnerService.hide();
       switch(error.status) {
         case 400: 
           if(error.error.errors){

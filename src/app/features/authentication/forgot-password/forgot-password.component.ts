@@ -6,7 +6,6 @@ import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
-import { NgxSpinnerModule } from 'ngx-spinner';
 import { ToastModule } from 'primeng/toast';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { MessageService } from 'primeng/api';
@@ -21,7 +20,7 @@ import { MessageService } from 'primeng/api';
     ButtonModule, 
     CommonModule, 
     InputTextModule, 
-    NgxSpinnerModule,
+
     FormsModule,
     ReactiveFormsModule,
     ToastModule,

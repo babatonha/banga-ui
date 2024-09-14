@@ -1,4 +1,5 @@
 
+
 <p-toolbar styleClass="bg-red" [style]="{ 'margin-top': '4px', 'border': 'none' }">
   <div class="p-toolbar-group-start">
       <p-button [rounded]="true" icon="pi pi-plus" class="mr-2" (click)="navigateToNewProperty()"/>
@@ -16,7 +17,7 @@
 
 
 <div class="card">
-  <p-dataView #dv [value]="propertiesDataSource" [rows]="5" [paginator]="true">
+  <p-dataView #dv [value]="propertiesDataSource" [rows]="5" [paginator]="true" [style]="{ 'height': '10%' }">
       <ng-template pTemplate="list" let-products>
           <div class="grid grid-nogutter">
               <div class="col-12" *ngFor="let item of propertiesDataSource; let first = first" class="col-12">

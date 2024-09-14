@@ -1,5 +1,4 @@
-<p-menubar [model]="items">
-
+<p-menubar [model]="items" [style]="{'position':'fixed','top':'0','z-index':'999','width':'100%'}">
   <ng-template pTemplate="item" let-item let-root="root">
       <a pRipple class="flex align-items-center p-menuitem-link" [routerLink]="item.routerLink">
           <span [class]="item.icon"></span>
@@ -11,6 +10,12 @@
   </ng-template>
   <ng-template pTemplate="end">
       <div class="flex align-items-center gap-2">
+        
+        <p-toggleButton 
+            onIcon={{themeIcon}}
+            offIcon={{themeIcon}}
+            [(ngModel)]="checked"           
+            (onChange)="changeTheme(checked ? 'dark':'light')" /> 
         <p-button *ngIf="!loggedInUser" label="Login" (onClick)="navigateToLogin()" icon="pi pi-sign-in" class="mr-2"></p-button>
 
         <div *ngIf="loggedInUser" class="card flex justify-content-center">
@@ -25,7 +30,6 @@
   </ng-template>
 </p-menubar>
 
-<ng-container>  
-    <router-outlet />
-    <app-footer></app-footer>
-</ng-container>
+
+
+

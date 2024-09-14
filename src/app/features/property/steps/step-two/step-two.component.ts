@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { NgxSpinnerModule } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { InputNumberModule } from 'primeng/inputnumber';
@@ -24,7 +23,6 @@ import { MultiSelectModule } from 'primeng/multiselect';
     ButtonModule, 
     CommonModule, 
     InputTextModule, 
-    NgxSpinnerModule,
     FormsModule,
     ReactiveFormsModule,
     ToastModule,

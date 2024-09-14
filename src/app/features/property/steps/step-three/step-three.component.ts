@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MessageService, PrimeNGConfig} from 'primeng/api';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ButtonModule } from 'primeng/button';
@@ -7,6 +7,8 @@ import { BadgeModule } from 'primeng/badge';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { ToastModule } from 'primeng/toast';
 import { BaseService } from '../../../../_services/base.service';
+import { PropertyPhotoService } from '../../../../_services/propertyPhoto.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -31,8 +33,14 @@ export class StepThreeComponent implements OnInit {
 
   totalSizePercent : number = 0;
   baseUrl!: string;
+  @Output() loadingEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  constructor(private config: PrimeNGConfig, private messageService: MessageService, private baseService: BaseService) {
+  constructor(
+    private config: PrimeNGConfig,
+    private router: Router, 
+    private messageService: MessageService,
+    private propertyPhotoService: PropertyPhotoService,
+    private baseService: BaseService) {
     this.baseUrl = this.baseService.baseUrl;
   }
   ngOnInit() {
@@ -61,11 +69,40 @@ export class StepThreeComponent implements OnInit {
         if(this.files.length > 5){
             this.messageService.add({ severity: 'error', summary: 'Maximum limit reached', detail: 'You can only upload a maximun of 5 photos', life: 3000 });
         }else{
-            this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File(s) Uploaded', life: 3000 });
+            const propertyId = localStorage.getItem('newPropertyId');
+            this.savePhotos(propertyId ? parseInt(propertyId) : 0);
         }
-       
+    } else{
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No file selected', life: 3000 });
+        this.loadingEmitter.emit(false);
+    }   
+  }
+
+  savePhotos(propertyId: number) {
+    if(!propertyId){
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Property Id not found', life: 3000 });
+        return;
     }
-      
+
+    this.loadingEmitter.emit(true);
+    const formData = new FormData();
+
+    for (const file of this.files) {  
+      formData.append('files', file);
+    }
+  
+    this.propertyPhotoService.saveAll(formData, propertyId).subscribe({
+      next: response =>{
+        this.loadingEmitter.emit(false);
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Photo(s) Uploaded', life: 3000 });
+        localStorage.removeItem('newPropertyId');
+        this.router.navigate(['/my-property']);
+      },error: (error) => {
+        console.log(error);
+        this.loadingEmitter.emit(false);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error, life: 3000 });
+      }
+    });
   }
 
   onSelectedFiles(event: any) {

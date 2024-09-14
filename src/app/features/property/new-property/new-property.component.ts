@@ -17,7 +17,9 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { StepTwoComponent } from '../steps/step-two/step-two.component';
 import { StepThreeComponent } from '../steps/step-three/step-three.component';
-import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
+import { AccountService } from '../../../_services/account.service';
+import { User } from '../../../_models/user';
+
 
 @Component({
   selector: 'app-new-property',
@@ -33,7 +35,7 @@ import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
     StepTwoComponent,
     StepThreeComponent,
     ToastModule,
-    NgxSpinnerModule
+    
   ],
   providers: [MessageService]
 })
@@ -51,6 +53,8 @@ export class NewPropertyComponent implements OnInit {
   suburbs: any[] = [];
 
   isNewProperty: boolean = true;
+  loading: boolean = false;
+  loggedInUser!: User;
   
     @ViewChild(StepOneComponent) stepOneComponent!: StepOneComponent;
     @ViewChild(StepTwoComponent) stepTwoComponent!: StepTwoComponent;
@@ -58,15 +62,26 @@ export class NewPropertyComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
     private propertyService: PropertyService,
-    private propertyPhotoService: PropertyPhotoService,
-    private router: Router,
-    private spinner: NgxSpinnerService,
     private messageService: MessageService,
-    private route: ActivatedRoute) { }
+    private accountService: AccountService) { }
 
   ngOnInit() {
     this.loadPageData(); 
+    this.getCurrentUser();
    
+  }
+
+  getCurrentUser(){
+    this.accountService.currentUser$.subscribe({
+       
+      next: user => {
+        if(user){
+          this.loggedInUser = user;
+        }else{
+            this.loggedInUser  = this.accountService.getLoggedInUser(); //try getting it from local storage
+        }
+      }
+    })
   }
 
   loadPageData(){
@@ -82,7 +97,13 @@ export class NewPropertyComponent implements OnInit {
   }
 
   uploadAllImages(){
+    this.loading = true;
     this.stepThreeComponent.onTemplatedUpload();
+  }
+
+
+  setLoading(value: boolean){
+    this.loading = value;
   }
 
 
@@ -96,16 +117,21 @@ export class NewPropertyComponent implements OnInit {
     }else{
       this.generatePropertyForm(this.stepOneComponent.stepOneForm, this.stepTwoComponent.stepTwoForm);
 
-      this.spinner.show();
- 
+
+      this.loading = true;
       this.propertyService.createProperty(this.newRecord).subscribe({
-          next: () => {  
-            this.messageService.add({ severity: 'info', summary: 'Success', detail: 'Successfully created new property', life: 3000 });
-            nextCallback.emit();
-            this.spinner.hide();
+          next: (response) => {  
+            if(response > 0){
+              this.messageService.add({ severity: 'info', summary: 'Success', detail: 'Successfully created new property', life: 3000 });
+              localStorage.setItem('newPropertyId', response.toString());
+              nextCallback.emit();
+            }else{
+              this.messageService.add({ severity: 'error', summary: 'Error', detail: "Failed to create new property", life: 3000 });
+            }
+            this.loading = false;
           },error: (error) => {
             this.messageService.add({ severity: 'error', summary: 'Error', detail: "Failed to create new property", life: 3000 });
-            this.spinner.hide();
+            this.loading = false;
           }
         });
     }
@@ -115,7 +141,7 @@ export class NewPropertyComponent implements OnInit {
   generatePropertyForm(stepOneItems: FormGroup, stepTwoItems: FormGroup){
     this.newRecord = {
       propertyId : 0,
-      ownerId :  0,
+      ownerId :  this.loggedInUser.id,
       ownerName :  '',
       assignedLawyerId :  stepOneItems.value.assignedLawyerId.lawFirmID,
       statusID :  0,

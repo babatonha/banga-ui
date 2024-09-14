@@ -14,10 +14,15 @@
             </div>
         </div>
     </ng-template>
-    <ng-template pTemplate="content" let-files let-uploadedFiles="uploadedFiles"  let-removeFileCallback="removeFileCallback" let-removeUploadedFileCallback="removeUploadedFileCallback">
+    <ng-template 
+        pTemplate="content" 
+        let-files 
+        let-uploadedFiles="uploadedFiles"  
+        let-removeFileCallback="removeFileCallback" 
+        let-removeUploadedFileCallback="removeUploadedFileCallback">
         <div *ngIf="files?.length > 0">
-            <div class="flex flex-wrap p-0 sm:p-5 gap-5">
-                <div *ngFor="let file of files; let i = index" class="card m-0 px-2 flex flex-column surface-border align-items-center gap-1 custom-shadow">
+            <div class="flex flex-wrap p-0 sm:p-5 gap-1">
+                <div *ngFor="let file of files; let i = index" class="card m-0 px-2 flex flex-column  align-items-center gap-1 custom-shadow">
                     <img role="presentation" [alt]="file.name" [src]="file.objectURL" width="30" height="30" />
                     <p-button
                         icon="pi pi-trash" 

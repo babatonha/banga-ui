@@ -3,7 +3,6 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AccountService } from '../../../_services/account.service';
-import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { Router } from '@angular/router';
 import { InputTextModule } from 'primeng/inputtext';
 import { CommonModule } from '@angular/common';
@@ -21,7 +20,6 @@ import { MessageService } from 'primeng/api';
     ButtonModule, 
     CommonModule, 
     InputTextModule, 
-    NgxSpinnerModule,
     FormsModule,
     ReactiveFormsModule,
     SplitButtonModule,
@@ -33,7 +31,6 @@ export class RegisterComponent implements OnInit {
   myForm!: FormGroup;
   constructor(private fb: FormBuilder,
      private accountService: AccountService,
-    private spinner: NgxSpinnerService,
     private router: Router,
     private messageService: MessageService,
   ) { }

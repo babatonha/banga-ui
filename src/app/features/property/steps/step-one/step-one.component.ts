@@ -1,10 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { NgxSpinnerModule } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
-
 import { InputTextModule } from 'primeng/inputtext';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { ToastModule } from 'primeng/toast';
@@ -24,7 +22,6 @@ import { RegistrationType } from '../../../../_models/registrationType';
     ButtonModule, 
     CommonModule, 
     InputTextModule, 
-    NgxSpinnerModule,
     FormsModule,
     ReactiveFormsModule,
     ToastModule,

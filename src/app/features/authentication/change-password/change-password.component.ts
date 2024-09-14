@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { changePassword } from '../../../_models/changePassword';
 import { CommonModule } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
-import { NgxSpinnerModule } from 'ngx-spinner';
 import { ToastModule } from 'primeng/toast';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { MessageService } from 'primeng/api';
@@ -21,7 +20,6 @@ import { ButtonModule } from 'primeng/button';
     ButtonModule, 
     CommonModule, 
     InputTextModule, 
-    NgxSpinnerModule,
     FormsModule,
     ReactiveFormsModule,
     ToastModule,

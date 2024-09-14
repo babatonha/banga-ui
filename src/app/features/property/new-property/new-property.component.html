@@ -2,7 +2,7 @@
 <h3 class="font-small text-center">New Property</h3>
 
 <div class="card">
-  <p-stepper orientation="vertical" [linear]="false">
+  <p-stepper orientation="vertical" [linear]="true">
 
       <p-stepperPanel header="Address Details">
           <ng-template pTemplate="content" let-nextCallback="nextCallback" let-index="index" >
@@ -31,7 +31,7 @@
               </div>
               <div class="flex py-4 gap-2">
                   <p-button [outlined]="true" label="Back" severity="secondary" (onClick)="prevCallback.emit()" />
-                  <p-button [outlined]="true" label="Next" (onClick)="onSubmit(nextCallback)" />
+                  <p-button [outlined]="true" [loading]="loading"  label="Save And Next" (onClick)="onSubmit(nextCallback)" />
               </div>
           </ng-template>
       </p-stepperPanel>
@@ -40,12 +40,12 @@
           <ng-template pTemplate="content" let-prevCallback="prevCallback" let-index="index">
               <div class="flex flex-column h-[auto]">
                 <div class="width[100%]">
-                  <app-step-three></app-step-three>
+                  <app-step-three (loadingEmitter)="setLoading($event)"></app-step-three>
               </div>
               </div>
               <div class="flex py-4 gap-2" >
                   <p-button label="Back" *ngIf="!isNewProperty" [outlined]="true" severity="secondary"  (onClick)="prevCallback.emit()" />
-                  <p-button label="Save Images" [outlined]="true"  (onClick)="uploadAllImages()" /> 
+                  <p-button label="Save Images" [outlined]="true"  [loading]="loading"  (onClick)="uploadAllImages()" /> 
               </div>
           </ng-template>
       </p-stepperPanel>
@@ -54,15 +54,6 @@
 
 
 <p-toast />
-<ngx-spinner
-  bdColor="rgba(51,51,51,0.8)"
-  size="medium"
-  color="#fff"
-  type="ball-scale-multiple"
-  [fullScreen]="false"
-  [showSpinner]="true"
->
-  <p style="font-size: 20px; color: white">Loading...</p>
-</ngx-spinner>
+
 
 

@@ -12,6 +12,9 @@ import { ToastModule } from 'primeng/toast';
 import { Router } from '@angular/router';
 import { AccountService } from '../../../_services/account.service';
 import { FooterComponent } from '../footer/footer.component';
+import { ThemeSevice } from '../../../_services/theme.service';
+import { ToggleButtonModule } from 'primeng/togglebutton';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-nav-bar',
@@ -26,6 +29,8 @@ import { FooterComponent } from '../footer/footer.component';
      BadgeModule, AvatarModule, 
      InputTextModule,
      RippleModule,
+     ToggleButtonModule,
+     FormsModule,
      FooterComponent ],
      providers: [MessageService]
 })
@@ -33,9 +38,13 @@ export class NavBarComponent implements OnInit {
   items: MenuItem[] | undefined;
   buttonItems: MenuItem[] | undefined;
   @Input() loggedInUser: User | undefined;
+  checked: boolean = false;
+  themeIcon: string  =  'pi pi-sun';
+  label: string = 'Light Mode';
 
   constructor(private messageService: MessageService, 
     private router: Router,
+    private themeService: ThemeSevice,
     private accountService: AccountService) 
   {
     this.items = [
@@ -104,6 +113,24 @@ export class NavBarComponent implements OnInit {
 
   save(severity: string) {
     this.messageService.add({ severity: severity, summary: 'Success', detail: 'Data Saved' });
+}
+
+changeTheme(theme: string) {
+
+  if(theme){
+    if(!this.checked){
+      this.themeIcon = 'pi pi-sun';
+      this.themeService.switchTheme(theme);
+      this.label = 'Light Mode';
+      this.checked = false;
+    }else{
+      this.themeIcon = 'pi pi-moon';
+      this.themeService.switchTheme(theme);
+      this.label = 'Dark Mode';
+      this.checked = true;
+    } 
+    
+  }
 }
   
 

@@ -5,7 +5,6 @@ import { CardModule } from 'primeng/card';
 import { Login } from '../../../_models/login';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AccountService } from '../../../_services/account.service';
-import { NgxSpinnerModule } from 'ngx-spinner';
 import { Router } from '@angular/router';
 import { InputTextModule } from 'primeng/inputtext';
 import { SplitButtonModule } from 'primeng/splitbutton';
@@ -21,7 +20,6 @@ import { ToastModule } from 'primeng/toast';
     ButtonModule, 
     CommonModule, 
     InputTextModule, 
-    NgxSpinnerModule,
     FormsModule,
     ReactiveFormsModule,
     ToastModule,
