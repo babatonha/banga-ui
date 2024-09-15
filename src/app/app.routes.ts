@@ -3,6 +3,7 @@ import { HomeComponent } from './features/landing/home/home.component';
 import { authGuard } from './_guards/auth.guard';
 
 export const routes: Routes = [
+    {path:'*', pathMatch:'full', redirectTo:'home'},
     {path:'', pathMatch:'full', redirectTo:'home'},
     {path:'home', component: HomeComponent},
     {path: 'login', loadComponent: () => import('./features/authentication/login/login.component').then(mod => mod.LoginComponent)},
@@ -12,4 +13,7 @@ export const routes: Routes = [
     {path: 'profile', loadComponent: () => import('./features/admin/profile/profile.component').then(mod => mod.ProfileComponent), canActivate: [authGuard]},
     {path: 'new-property', loadComponent: () => import('./features/property/new-property/new-property.component').then(mod => mod.NewPropertyComponent), canActivate: [authGuard]},
     {path: 'my-property', loadComponent: () => import('./features/property/my-property/my-property.component').then(mod => mod.MyPropertyComponent), canActivate: [authGuard]},
+    {path: 'edit-property/:id', loadComponent: () => import('./features/property/edit-property/edit-property.component').then(mod => mod.EditPropertyComponent), canActivate: [authGuard]},
+    {path: 'property-details/:id', loadComponent: () => import('./features/property/property-details/property-details.component').then(mod => mod.PropertyDetailsComponent), canActivate: [authGuard]},
+    {path: 'law-firms', loadComponent: () => import('./features/law-firm/law-firm-list/law-firm-list.component').then(mod => mod.LawFirmListComponent)},
 ];

@@ -56,7 +56,7 @@ export class NavBarComponent implements OnInit {
         {
             label: 'Law Firms',
             icon: 'pi pi-star',
-            routerLink: 'login'
+            routerLink: 'law-firms'
         },
     ];
   

@@ -10,6 +10,8 @@ import { SearchFilter } from '../../../_models/searchFilter';
 import { DefaultSearchFilter } from '../../../_static/searchFilterDefaultData';
 import { ToolbarModule } from 'primeng/toolbar';
 import { InputTextModule } from 'primeng/inputtext';
+import { AccountService } from '../../../_services/account.service';
+import { User } from '../../../_models/user';
 
 
 @Component({
@@ -29,26 +31,47 @@ export class MyPropertyComponent implements OnInit {
 
   propertiesDataSource: Property[] = [];
   searchFilter: SearchFilter = DefaultSearchFilter.getDefaultSearchFilter();
-
+  loggedInUser!: User;
   constructor(private propertyService: PropertyService,
+    private accountService: AccountService,
     private router: Router,) { }
 
   ngOnInit() {
-    this.getAllProperties();
+    this.getCurrentUser();
   }
 
   searchItem(){
     console.log(123);
   }
 
-  navigateToNewProperty(){
-    this.router.navigate(['new-property']);
+  navigateToNewPage(url: string){
+    this.router.navigate([`${url}`]);
+  }
+
+  navigateToPageWithId(url: string, id: number){
+    this.router.navigate([`${url}`,id]);
   }
 
 
+  getCurrentUser(){
+    this.accountService.currentUser$.subscribe({
+       
+      next: user => {
+        if(user){
+          this.loggedInUser = user;
+        }else{
+            this.loggedInUser  = this.accountService.getLoggedInUser(); //try getting it from local storage
+        }
 
-  getAllProperties(){
-    this.propertyService.getFilteredProperties(this.searchFilter).subscribe({
+        this.getAllProperties(this.loggedInUser.id);
+      }
+    })
+  }
+
+
+  getAllProperties(userId: number){
+
+    this.propertyService.getOwnerProperties(userId).subscribe({
       next: response => {
         this.propertiesDataSource = response;
       }

@@ -18,6 +18,11 @@ import { ManagePropertyModel } from "../_models/manageProperty";
         return this.http.post<any>(`${this.baseService.baseUrl}Property/FilteredSearch`, filter);
     }
 
+    
+    getOwnerProperties(ownerId: number){
+      return this.http.get<any>(`${this.baseService.baseUrl}Property/Owner/${ownerId}`);
+  }
+
     getPropertyById(propertyId: number){
       return this.http.get<any>(`${this.baseService.baseUrl}Property/${propertyId}`);
     }

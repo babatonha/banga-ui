@@ -2,7 +2,7 @@
 
 <p-toolbar styleClass="bg-red" [style]="{ 'margin-top': '4px', 'border': 'none' }">
   <div class="p-toolbar-group-start">
-      <p-button [rounded]="true" icon="pi pi-plus" class="mr-2" (click)="navigateToNewProperty()"/>
+      <p-button [rounded]="true" icon="pi pi-plus" class="mr-2" (click)="navigateToNewPage('new-property')"/>
   </div>
   <div class="p-toolbar-group-center">
       <span class="p-input-icon-right">
@@ -42,8 +42,8 @@
                           <div class="flex flex-column md:align-items-end gap-5">
                               <span class="text-xl font-semibold text-900">{{ '$' + item.price }}</span>
                               <div class="flex flex-row-reverse md:flex-row gap-2">
-                                  <p-button icon="pi pi-heart" [outlined]="true" />
-                                  <p-button icon="pi pi-eye" class="flex-auto md:flex-initial white-space-nowrap" label="Details" />
+                                  <p-button icon="pi pi-pen-to-square" [outlined]="true" (click)="navigateToPageWithId('edit-property', item.propertyId)" />
+                                  <p-button icon="pi pi-eye" [outlined]="true" (click)="navigateToPageWithId('property-details', item.propertyId)" />
                               </div>
                           </div>
                       </div>
