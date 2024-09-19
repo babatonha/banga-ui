@@ -34,14 +34,16 @@ export class StepOneComponent implements OnInit {
   stepOneForm!: FormGroup;
   @Input() propertyTypes: PropertyType[] = [];
   @Input() selectedPropertyType: PropertyType | undefined;
+  @Input() selectedLawFirm: LawFirm | undefined;
+  @Input() selectedRegistrationType: RegistrationType | undefined;
+  @Input() selectedCity: City | undefined;
+  @Input() enteredAddress: string | undefined;
   @Input() lawFirms: LawFirm[] = [];
   @Input() suburbs: any[] = [];
   @Input() cities: City[] = [];
-  registrationTypes: RegistrationType[] = [
-    {id: 1, name: 'Deeds'},
-    {id: 2, name: 'Council Cession'},
-    {id: 3, name: 'Developer'},
-  ];
+  @Input() registrationTypes: RegistrationType[] = [];
+
+
 
 
   constructor(private fb: FormBuilder,
@@ -52,12 +54,12 @@ export class StepOneComponent implements OnInit {
 
   ngOnInit() {
     this.stepOneForm =   this.fb.group({
-      assignedLawyerId :  [null, [Validators.required ]],
-      propertyTypeId :  [null, [Validators.required]],
-      registrationTypeId :  [null, [Validators.required]],
+      assignedLawyerId :  [this.selectedLawFirm, [Validators.required ]],
+      propertyTypeId :  [this.selectedPropertyType, [Validators.required]],
+      registrationTypeId :  [this.selectedRegistrationType, [Validators.required]],
       suburbId :  [null],
-      cityId :  [null, [Validators.required]],
-      address :  ['', [Validators.required]],
+      cityId :  [this.selectedCity, [Validators.required]],
+      address :  [this.enteredAddress, [Validators.required]],
     })
   }
 
@@ -71,10 +73,10 @@ export class StepOneComponent implements OnInit {
 
   
   onLawFirmChange(event: any) {
-    const selectedItem = event.value;
+    const selectedItem: LawFirm = event.value;
     if( event.target){
       event.target.value = selectedItem;
-      this.stepOneForm.controls['assignedLawyerId'].setValue(selectedItem.id);
+      this.stepOneForm.controls['assignedLawyerId'].setValue(selectedItem.lawFirmID);
     }
 
   }
@@ -96,10 +98,10 @@ export class StepOneComponent implements OnInit {
   }
 
   onRegistrationTypeChange(event: any) {
-    const selectedItem = event.value;
+    const selectedItem: RegistrationType = event.value;
     if( event.target){
       event.target.value = selectedItem;
-      this.stepOneForm.controls['registrationTypeId'].setValue(selectedItem.id);
+      this.stepOneForm.controls['registrationTypeId'].setValue(selectedItem.registrationTypeId);
     }
   }
 

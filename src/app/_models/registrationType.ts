@@ -1,4 +1,4 @@
 export interface RegistrationType{
-    id: number;
+    registrationTypeId: number;
     name: string; 
 }

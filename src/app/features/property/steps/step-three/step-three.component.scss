@@ -7,3 +7,33 @@
 .custom-shadow {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
+
+
+
+  .image-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #ccc; /* Border color */
+    border-radius: 1%; /* Rounded border */
+    width: 120px; /* Set width for the container */
+    height: 120px; /* Set height for the container */
+    padding: 10px;
+    position: relative;
+    background-color: #f9f9f9; /* Optional background color */
+  }
+  
+  .image-container p-image img {
+    border-radius: 50%; /* Makes the image round */
+  }
+  
+  .delete-icon {
+    margin-top: 10px;
+    cursor: pointer;
+    color: red; /* Icon color */
+  }
+  
+  .delete-icon:hover {
+    color: darkred; /* Color on hover */
+  }

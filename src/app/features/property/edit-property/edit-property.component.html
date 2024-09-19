@@ -1,3 +1,71 @@
-<h1>Property Edit</h1>
 
-<h3>{{currentPropertyId}}</h3>
+<h3 class="font-small text-center">Edit Property</h3>
+
+<div class="card">
+  <p-stepper orientation="vertical" [linear]="false">
+
+      <p-stepperPanel header="General Details">
+          <ng-template pTemplate="content" let-nextCallback="nextCallback" let-index="index" >
+              <div class="flex flex-column h-[auto]">
+                  <div class="width[100%]" >
+                      <app-step-one
+                      *ngIf="selectedPropertyType"
+                        [lawFirms]="lawFirms"
+                        [propertyTypes]="propertyTypes"
+                        [suburbs]="suburbs"
+                        [cities]="cities"
+                        [registrationTypes]="registrationTypes"
+                        [selectedCity]="selectedCity"
+                        [selectedLawFirm]="selectedLawFirm"
+                        [selectedPropertyType]="selectedPropertyType"
+                        [selectedRegistrationType]="selectedRegistrationType"
+                        [enteredAddress]="enteredAddress"
+                      ></app-step-one>
+                  </div>
+              </div>
+              <div class="flex py-4">
+                  <p-button label="Next" [outlined]="true" (onClick)="nextCallback.emit()"  />
+              </div>
+          </ng-template>
+      </p-stepperPanel>
+
+      <p-stepperPanel header="Property Details">
+          <ng-template pTemplate="content" let-prevCallback="prevCallback" let-nextCallback="nextCallback" let-index="index">
+              <div class="flex flex-column h-[auto]">
+                <div class="width[100%]">
+                  <app-step-two
+                  *ngIf="stepTwoProperties"
+                  [stepTwoProperties]="stepTwoProperties">
+                </app-step-two>
+              </div>
+              </div>
+              <div class="flex py-4 gap-2">
+                  <p-button [outlined]="true" label="Back" severity="secondary" (onClick)="prevCallback.emit()" />
+                  <p-button [outlined]="true" [loading]="loading"  label="Save And Next" (onClick)="onSubmit(nextCallback)" />
+              </div>
+          </ng-template>
+      </p-stepperPanel>
+
+      <p-stepperPanel header="Upload Images">
+          <ng-template pTemplate="content" let-prevCallback="prevCallback" let-index="index">
+              <div class="flex flex-column h-[auto]">
+                <div class="width[100%]">
+                 <app-step-three
+                 [currentPropertyId]="currentPropertyId"
+                 ></app-step-three>
+              </div>
+              </div>
+              <div class="flex py-4 gap-2" >
+                  <p-button label="Back"  [outlined]="true" severity="secondary"  (onClick)="prevCallback.emit()" />
+                  <p-button label="Save Images" [outlined]="true"  [loading]="loading"  (onClick)="uploadAllImages()" /> 
+              </div>
+          </ng-template>
+      </p-stepperPanel>
+  </p-stepper>
+</div>
+
+
+<p-toast />
+
+
+

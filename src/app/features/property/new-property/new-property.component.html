@@ -4,7 +4,7 @@
 <div class="card">
   <p-stepper orientation="vertical" [linear]="true">
 
-      <p-stepperPanel header="Address Details">
+      <p-stepperPanel header="General Details">
           <ng-template pTemplate="content" let-nextCallback="nextCallback" let-index="index" >
               <div class="flex flex-column h-[auto]">
                   <div class="width[100%]">
@@ -13,6 +13,7 @@
                         [propertyTypes]="propertyTypes"
                         [suburbs]="suburbs"
                         [cities]="cities"
+                        [registrationTypes]="registrationTypes"
                       ></app-step-one>
                   </div>
               </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
@@ -12,6 +12,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { Amenities } from '../../../../_models/amenities';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { StepTwoProperties } from '../../../../_models/stepTwo';
 
 
 @Component({
@@ -36,6 +37,8 @@ import { MultiSelectModule } from 'primeng/multiselect';
 export class StepTwoComponent implements OnInit {
   stepTwoForm!: FormGroup;
 
+  @Input()stepTwoProperties: StepTwoProperties | undefined;
+
   amenitiesList: Amenities[] = [
     {id: 1, name: 'Good zesa'},
     {id: 2, name: 'Municipal water'},
@@ -58,13 +61,13 @@ export class StepTwoComponent implements OnInit {
 
   ngOnInit() {
     this.stepTwoForm =   this.fb.group({
-      price :  [null, [Validators.required]],
-      numberOfRooms :  [0],
-      numberOfBathrooms :  [0 ],
-      parkingSpots :  [0],
-      amenities:  [''],
-      squareMetres :  [null, [Validators.required]],
-      description :  ['', [Validators.required]],
+      price :  [this.stepTwoProperties?.price, [Validators.required]],
+      numberOfRooms :  [this.stepTwoProperties?.numberOfRooms],
+      numberOfBathrooms :  [this.stepTwoProperties?.numberOfBathrooms ],
+      parkingSpots :  [this.stepTwoProperties?.parkingSpots],
+      amenities:  [this.stepTwoProperties?.amenities],
+      squareMetres :  [this.stepTwoProperties?.squareMetres, [Validators.required]],
+      description :  [this.stepTwoProperties?.description, [Validators.required]],
     })
   }
 

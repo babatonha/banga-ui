@@ -19,6 +19,7 @@ import { StepTwoComponent } from '../steps/step-two/step-two.component';
 import { StepThreeComponent } from '../steps/step-three/step-three.component';
 import { AccountService } from '../../../_services/account.service';
 import { User } from '../../../_models/user';
+import { RegistrationType } from '../../../_models/registrationType';
 
 
 @Component({
@@ -47,6 +48,7 @@ export class NewPropertyComponent implements OnInit {
   propertyTypes: PropertyType[] = [];
   lawFirms: LawFirm[] = [];
   propertyPhotos: PropertyPhoto[] = [];
+  registrationTypes: RegistrationType[] = [];
   propertyId: number = 0;
  currentPropertyId!: number;
 
@@ -91,7 +93,8 @@ export class NewPropertyComponent implements OnInit {
           this.cities = response.cities;
           this.suburbs = response.suburbs;
           this.lawFirms = response.lawFirms;  
-          this.propertyTypes = response.propertyTypes;    
+          this.propertyTypes = response.propertyTypes;  
+          this.registrationTypes = response.registrationTypes;  
       }
     });
   }

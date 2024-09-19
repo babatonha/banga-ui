@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MessageService, PrimeNGConfig} from 'primeng/api';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ButtonModule } from 'primeng/button';
@@ -9,6 +9,12 @@ import { ToastModule } from 'primeng/toast';
 import { BaseService } from '../../../../_services/base.service';
 import { PropertyPhotoService } from '../../../../_services/propertyPhoto.service';
 import { Router } from '@angular/router';
+import { PanelModule } from 'primeng/panel';
+import { PropertyPhoto } from '../../../../_models/propertyPhoto';
+import { ImageModule } from 'primeng/image';
+import { CardModule } from 'primeng/card';
+import { CarouselModule } from 'primeng/carousel';
+import { TagModule } from 'primeng/tag';
 
 
 @Component({
@@ -21,7 +27,12 @@ import { Router } from '@angular/router';
     ButtonModule, 
     BadgeModule, 
     ProgressBarModule, 
-    ToastModule, 
+    ToastModule,
+    PanelModule, 
+    ImageModule,
+    CardModule,
+    CarouselModule, 
+    TagModule,
     CommonModule],
   providers: [MessageService]
 })
@@ -33,6 +44,9 @@ export class StepThreeComponent implements OnInit {
 
   totalSizePercent : number = 0;
   baseUrl!: string;
+  propertyPhotos: PropertyPhoto[] = [];
+  responsiveOptions: any[] | undefined;
+  @Input() currentPropertyId!: number;
   @Output() loadingEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(
@@ -42,8 +56,26 @@ export class StepThreeComponent implements OnInit {
     private propertyPhotoService: PropertyPhotoService,
     private baseService: BaseService) {
     this.baseUrl = this.baseService.baseUrl;
+    this.responsiveOptions = [
+      {
+          breakpoint: '1199px',
+          numVisible: 1,
+          numScroll: 1
+      },
+      {
+          breakpoint: '991px',
+          numVisible: 2,
+          numScroll: 1
+      },
+      {
+          breakpoint: '767px',
+          numVisible: 1,
+          numScroll: 1
+      }
+  ];
   }
   ngOnInit() {
+    this.getPropertyPhotos(this.currentPropertyId);
   }
 
 
@@ -56,6 +88,7 @@ export class StepThreeComponent implements OnInit {
       this.totalSize -= parseInt(this.formatSize(file.size));
       this.totalSizePercent = this.totalSize / 10;
   }
+
 
   onClearTemplatingUpload(clear: any) {
       clear();
@@ -134,6 +167,26 @@ export class StepThreeComponent implements OnInit {
       const formattedSize = parseFloat((bytes / Math.pow(k, i)).toFixed(dm));
 
       return `${formattedSize}`; // return `${formattedSize} ${sizes[i]}`;
+  }
+
+
+  getPropertyPhotos(propertyId: number){
+    this.propertyPhotoService.getPropertyPhotos(propertyId).subscribe({
+      next: response =>{
+        this.propertyPhotos = response;
+      }
+    })
+  }
+
+  deletePhoto(photoId: number){
+    this.loadingEmitter.emit(true);
+    this.propertyPhotoService.deletePhoto(photoId).subscribe({
+      next: response =>{
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Deleted Successfully', life: 3000 });
+        this.getPropertyPhotos(this.currentPropertyId); 
+        this.loadingEmitter.emit(false);
+      }
+    })
   }
 
 
