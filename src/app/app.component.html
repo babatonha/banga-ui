@@ -1,11 +1,16 @@
 
-<app-nav-bar></app-nav-bar>
 
-  <p-scrollPanel [style]="{ width: '100%', height: '93vh', 'padding-top': '3.5rem' }" styleClass="custombar1">
-    <router-outlet />
-</p-scrollPanel>
 
-<app-footer></app-footer>
+    <app-nav-bar></app-nav-bar>
+    <div class="container">
+        <p-scrollPanel [style]="{ width: '100%', height: '93vh', 'padding-top': '3.5rem' }" styleClass="custombar1">
+          <router-outlet />
+        </p-scrollPanel>
+    </div>
+
+  <app-footer></app-footer>
+
+
 
 
 

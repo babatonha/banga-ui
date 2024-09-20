@@ -1,7 +1,32 @@
 <p-toast />
 
 <p-panel header="Current Images" [style]="{'padding-bottom': '0.5rem', }"  [toggleable]="true">
-  <p>hjdscdsbcksdcnsa scisckascbsk</p>
+<ng-template 
+    pTemplate="content" >
+    <div *ngIf="propertyPhotos.length > 0">
+        <div class="flex flex-wrap p-0 sm:p-1 gap-1">
+            <div *ngFor="let photo of propertyPhotos; let i = index" class="card m-0 px-2 flex flex-column  align-items-center gap-1 custom-shadow">
+                <p-image 
+                    role="presentation" 
+                    src="{{photo.photoUrl}}" 
+                    previewImageSrc="{{photo.photoUrl}}" 
+                    alt="Image" 
+                    width="30"
+                    height="30"
+                    [preview]="true" />
+                <p-button
+                    icon="pi pi-trash" 
+                    (onClick)="deletePhoto(photo.propertyPhotoId)" 
+                    [outlined]="true" 
+                    [rounded]="true" 
+                    [text]="true"
+                    [style]="{'height': '20px', 'width': '20px'}"
+                    severity="danger" />
+
+            </div>
+        </div>
+    </div>
+</ng-template>
 
 </p-panel>
 
@@ -52,3 +77,5 @@
         </div>
     </ng-template>
 </p-fileUpload>
+
+<p-confirmDialog />
