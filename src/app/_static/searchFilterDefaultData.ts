@@ -9,7 +9,9 @@ export class DefaultSearchFilter {
         maxPrice: 0,
         minPrice: 0,
         beds:0,
-        baths:0
+        baths:0,
+        pageIndex:0,
+        pageSize:10
     };
   }
 }

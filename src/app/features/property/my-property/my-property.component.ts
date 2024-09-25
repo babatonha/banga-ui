@@ -12,6 +12,9 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { InputTextModule } from 'primeng/inputtext';
 import { AccountService } from '../../../_services/account.service';
 import { User } from '../../../_models/user';
+import { PaginatorModule } from 'primeng/paginator';
+import { PageEvent } from '../../../_models/pageEvent';
+import { FormsModule } from '@angular/forms';
 
 
 @Component({
@@ -24,24 +27,47 @@ import { User } from '../../../_models/user';
     DataViewModule, 
     InputTextModule,
     ButtonModule, 
+    FormsModule,
     TagModule, 
+    PaginatorModule,
     CommonModule],
 })
+
+
 export class MyPropertyComponent implements OnInit {
 
   propertiesDataSource: Property[] = [];
   searchFilter: SearchFilter = DefaultSearchFilter.getDefaultSearchFilter();
   loggedInUser!: User;
+  pageSize: number = 5;
+  pageIndex: number = 0;
+  totalCount: number = 0;
+  first: number = 0;
+  searchTerm: string = '';
+
   constructor(private propertyService: PropertyService,
     private accountService: AccountService,
-    private router: Router,) { }
+    private router: Router,) {
+
+      
+     }
 
   ngOnInit() {
     this.getCurrentUser();
   }
 
   searchItem(){
-    console.log(123);
+    this.searchFilter.searchTerms = [];
+    this.searchFilter.searchTerms.push(this.searchTerm);
+    this.getAllProperties(this.loggedInUser.id);
+  }
+
+
+  onPageChange(event: any) {
+      this.pageIndex = event.page + 1;
+      this.pageSize = event.rows;
+
+      this.getAllProperties(this.loggedInUser.id);
   }
 
   navigateToNewPage(url: string){
@@ -70,31 +96,14 @@ export class MyPropertyComponent implements OnInit {
 
 
   getAllProperties(userId: number){
+    this.searchFilter.pageIndex = this.pageIndex;
+    this.searchFilter.pageSize = this.pageSize;
 
-    this.propertyService.getOwnerProperties(userId).subscribe({
+    this.propertyService.getOwnerProperties(userId, this.searchFilter).subscribe({
       next: response => {
-        this.propertiesDataSource = response;
+        this.propertiesDataSource = response.items;
+        this.totalCount = response.totalCount;
       }
     })
   }
-
-
-
-
-  // getSeverity(product: Property) {
-  //   switch (product.) {
-  //       case 'INSTOCK':
-  //           return 'success';
-
-  //       case 'LOWSTOCK':
-  //           return 'warning';
-
-  //       case 'OUTOFSTOCK':
-  //           return 'danger';
-
-  //       default:
-  //           return null;
-  //   }
-//};
-
 }

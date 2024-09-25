@@ -6,4 +6,6 @@ export interface SearchFilter{
     minPrice: number;
     beds: number;
     baths:number;
+    pageIndex: number;
+    pageSize: number;
 }

@@ -1,1 +1,72 @@
-<h1>Property Details</h1>
+<div class="grid">
+    <div class="col-12 md:col-8 lg:col-8 sm:col-12 xl:8">
+        <div *ngIf="propertyPhotos.length>0" class="border-1 surface-border border-round m-2 p-3">
+            <p-galleria 
+            [value]="propertyPhotos" 
+            [showIndicators]="true" 
+            [showThumbnails]="false" 
+            [changeItemOnIndicatorHover]="true" 
+            [responsiveOptions]="responsiveOptions" 
+            [containerStyle]="{ 'max-width': '100%',  }"> 
+
+              <ng-template pTemplate="item" let-item>
+                  <img [src]="item.photoUrl"  class="w-full border-round image-style" />
+             
+              </ng-template>
+          </p-galleria>
+
+
+        
+        </div>
+    </div>
+    <div class="col-12 md:col-4 lg:col-4 sm:col-12 xl:4">
+        <div class="border-1 surface-border border-round m-2 p-3">
+            <div class="text-center p-3 border-round-sm bg-primary font-bold ">Law Fim and Logo</div>
+            <div class="text-center p-3 border-round-sm bg-primary font-bold ">Law firm review count</div>
+            <div class="text-center p-3 border-round-sm bg-primary font-bold ">Current Offers Count/ Max Offer Amount</div>
+            <div class="text-center p-3 border-round-sm bg-primary font-bold ">Likes and Like Button</div>
+            <div class="text-center p-3 border-round-sm bg-primary font-bold ">Make Offer/Edit||Contact Laywer</div>
+            <div class="text-center p-3 border-round-sm bg-primary font-bold ">Likes and Like Button</div>
+            <div class="text-center p-3 border-round-sm bg-primary font-bold ">Make Offer/Edit||Contact Laywer</div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<div *ngIf="currentProperty">
+    <p-card header="{{currentProperty.price | currency}}">
+        <p class="m-0">
+             {{currentProperty.propertyTypeName}} with  {{currentProperty.registrationTypeId}}
+        </p>
+
+        <p class="m-0">
+            {{currentProperty.address}}, {{currentProperty.cityName}}
+       </p>
+       <div class="card flex align-items-center gap-2 flex-wrap mt-2">
+        <p-chip label="{{currentProperty.squareMetres}} &#13217;"  />
+        <p-chip label="{{currentProperty.numberOfRooms}} Rooms"  />
+        <p-chip label="{{currentProperty.numberOfBathrooms}} Bathrooms"  />
+        <p-chip label="{{currentProperty.parkingSpots}} Parking"  />
+    </div>
+    </p-card>
+    
+    <br>
+    <p-card header="Description">
+        <p class="m-0">
+            {{currentProperty.description}}
+        </p>
+    </p-card>
+    <br>
+    
+    <p-card header="Amenities">
+        <div class="card flex align-items-center gap-2 flex-wrap">
+            @for (item of this.currentAmenities; track $index) {
+                <p-chip label="{{item.name}}" />
+            }
+        </div>
+    </p-card>
+</div>
+
+

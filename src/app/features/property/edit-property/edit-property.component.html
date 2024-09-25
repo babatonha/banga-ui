@@ -2,7 +2,7 @@
 <h3 class="font-small text-center">Edit Property</h3>
 
 <div class="card">
-  <p-stepper orientation="vertical" [linear]="true">
+  <p-stepper orientation="vertical" [linear]="false">
 
       <p-stepperPanel header="General Details">
           <ng-template pTemplate="content" let-nextCallback="nextCallback" let-index="index" >
@@ -24,7 +24,7 @@
                   </div>
               </div>
               <div class="flex py-4">
-                  <p-button label="Next" [outlined]="true" (onClick)="nextCallback.emit()"  />
+                  <p-button [raised]="true" label="Next" [outlined]="true" (onClick)="nextCallback.emit()"  />
               </div>
           </ng-template>
       </p-stepperPanel>
@@ -40,8 +40,8 @@
               </div>
               </div>
               <div class="flex py-4 gap-2">
-                  <p-button [outlined]="true" label="Back" severity="secondary" (onClick)="prevCallback.emit()" />
-                  <p-button [outlined]="true" [loading]="loading"  label="Save And Next" (onClick)="onSubmit(nextCallback)" />
+                  <p-button [raised]="true" [outlined]="true" label="Back" severity="secondary" (onClick)="prevCallback.emit()" />
+                  <p-button [raised]="true" [outlined]="true" [loading]="loading"  label="Save And Next" (onClick)="onSubmit(nextCallback)" />
               </div>
           </ng-template>
       </p-stepperPanel>
@@ -56,8 +56,8 @@
               </div>
               </div>
               <div class="flex py-4 gap-2" >
-                  <p-button label="Back"  [outlined]="true" severity="secondary"  (onClick)="prevCallback.emit()" />
-                  <p-button label="Save Images" [outlined]="true"  [loading]="loading"  (onClick)="uploadAllImages()" /> 
+                  <p-button [raised]="true" label="Back"  [outlined]="true" severity="secondary"  (onClick)="prevCallback.emit()" />
+                  <p-button [raised]="true" label="Save Images" [outlined]="true"  [loading]="loading"  (onClick)="uploadAllImages()" /> 
               </div>
           </ng-template>
       </p-stepperPanel>

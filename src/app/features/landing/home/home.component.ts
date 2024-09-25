@@ -5,13 +5,21 @@ import { DataViewModule } from 'primeng/dataview';
 import { TagModule } from 'primeng/tag';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CardModule } from 'primeng/card';
+import { PropertyListComponent } from '../../property/property-list/property-list.component';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
   standalone: true,
-  imports: [DataViewModule, ButtonModule, TagModule, CommonModule, CardModule],
+  imports: [
+    DataViewModule, 
+    ButtonModule, 
+    TagModule, 
+    CommonModule,
+    PropertyListComponent, 
+    CardModule
+  ],
 })
 export class HomeComponent implements OnInit {
 
