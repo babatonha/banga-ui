@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Property } from '../../../_models/property';
 import { SearchFilter } from '../../../_models/searchFilter';
 import { DefaultSearchFilter } from '../../../_static/searchFilterDefaultData';
@@ -16,6 +16,9 @@ import { AccountService } from '../../../_services/account.service';
 import { Router } from '@angular/router';
 import { AutoCompleteCompleteEvent, AutoCompleteModule } from 'primeng/autocomplete';
 import { LocationService } from '../../../_services/location.service';
+import { FilterComponent } from '../../../common/components/filter/filter.component';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-property-list',
@@ -31,8 +34,11 @@ import { LocationService } from '../../../_services/location.service';
     TagModule, 
     PaginatorModule,
     CommonModule, 
-     AutoCompleteModule
+     AutoCompleteModule,
+     FilterComponent,
+     ConfirmPopupModule,
   ],
+  providers: [ConfirmationService, MessageService]
 })
 export class PropertyListComponent implements OnInit {
   propertiesDataSource: Property[] = [];
@@ -44,11 +50,15 @@ export class PropertyListComponent implements OnInit {
   first: number = 0;
   searchTerm: string = '';
 
-  selectedItems: string[] = [];
+  selectedSearchTerms: string[] = [];
   allLocations:   string[] = [];
+  suggestions:   string[] = [];
+  @ViewChild(FilterComponent)  filterComponent!: FilterComponent; 
   constructor(private propertyService: PropertyService,
     private accountService: AccountService,
     private locationService: LocationService,
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService,
     private router: Router,) {}
 
   ngOnInit() {
@@ -56,9 +66,10 @@ export class PropertyListComponent implements OnInit {
     this.getAllProperties();
   }
 
-  searchItem(){
+  searchProperties(){
     this.searchFilter.searchTerms = [];
-    this.searchFilter.searchTerms.push(this.searchTerm);
+    this.searchFilter.searchTerms = this.selectedSearchTerms;
+    this.getAllProperties();
   }
 
   getCitySuburbs(){
@@ -70,8 +81,14 @@ export class PropertyListComponent implements OnInit {
   }
 
 
-  search(event: AutoCompleteCompleteEvent) {
-    this.allLocations = [...Array(10).keys()].map((item) => event.query + '-' + item);
+  suggestionSearch(event: AutoCompleteCompleteEvent) {
+    this.suggestions =  this.allLocations.filter(item => 
+      item.toLowerCase().includes(event.query.toLowerCase())
+    );
+  }
+
+  filterClick(){
+    this.filterComponent.visible = true;
   }
 
 
@@ -86,7 +103,7 @@ export class PropertyListComponent implements OnInit {
   }
 
   navigateToPageWithId(url: string, id: number){
-    this.router.navigate([`${url}`,id]);
+    this.router.navigate([`/${url}`,id]);
   }
 
 
@@ -98,8 +115,32 @@ export class PropertyListComponent implements OnInit {
       next: response => {
         this.propertiesDataSource = response.items;
         this.totalCount = response.totalCount;
+      }, error: error => {
+        this.propertiesDataSource = [];
       }
     })
   }
+
+
+
+  confirm(event: Event) {
+    this.confirmationService.confirm({
+        target: event.target as EventTarget,
+        message: 'Please confirm to proceed moving forward.',
+        icon: 'pi pi-filter',
+        acceptIcon: 'pi pi-check mr-1',
+        rejectIcon: 'pi pi-times mr-1',
+        acceptLabel: 'Filter',
+        rejectLabel: 'Clear',
+        rejectButtonStyleClass: 'p-button-outlined p-button-sm',
+        acceptButtonStyleClass: 'p-button-sm',
+        accept: () => {
+            this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'You have accepted', life: 3000 });
+        },
+        reject: () => {
+            this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
+        }
+    });
+}
 
 }

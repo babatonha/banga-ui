@@ -59,6 +59,10 @@ export class MyPropertyComponent implements OnInit {
   searchItem(){
     this.searchFilter.searchTerms = [];
     this.searchFilter.searchTerms.push(this.searchTerm);
+
+    if(this.searchTerm === ""){
+      this.searchFilter.searchTerms = [];
+    }
     this.getAllProperties(this.loggedInUser.id);
   }
 
@@ -103,6 +107,9 @@ export class MyPropertyComponent implements OnInit {
       next: response => {
         this.propertiesDataSource = response.items;
         this.totalCount = response.totalCount;
+      }, error: error => {
+        this.propertiesDataSource = [];
+        this.totalCount  = 0;
       }
     })
   }

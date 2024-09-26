@@ -1,0 +1,34 @@
+<form [formGroup]="myForm"   class="center-container" >
+    <div class="field">
+      <label for="username">Username</label>
+      <input
+        type="text"
+        pInputText
+        formControlName="username"
+        class="w-full"
+        name="username"
+      />
+    </div>
+
+    <div class="field">
+      <label for="oldPassword">Old Password</label>
+      <input
+        type="password"
+        pInputText
+        formControlName="oldPassword"
+        class="w-full"
+        name="oldPassword"
+      />
+    </div>
+
+    <div class="field">
+      <label for="newPassword">New Password</label>
+      <input
+        type="password"
+        pInputText
+        formControlName="newPassword"
+        class="w-full"
+        name="newPassword"
+      />
+    </div>
+</form>

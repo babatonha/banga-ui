@@ -1,23 +1,20 @@
-<div class="mt-1">
-
-
-
+<div class="mt-1 mb-1">
   <div class="flex items-center gap-2 w-full">
     <!-- Autocomplete Input -->
     <span class="p-fluid w-full">
       <p-autoComplete 
-          placeholder="Search"
-          [(ngModel)]="selectedItems" 
-          [suggestions]="allLocations" 
-          (completeMethod)="search($event)" 
+          placeholder="Search by City"
+          [(ngModel)]="selectedSearchTerms" 
+          [suggestions]="suggestions" 
+          (completeMethod)="suggestionSearch($event)" 
           [multiple]="true" 
       />
     </span>
   
     <!-- Buttons -->
-    <div class="flex flex-row-reverse md:flex-row gap-1">
-      <p-button icon="pi pi-search" [raised]="true" [outlined]="true"  />
-      <p-button icon="pi pi-filter" [raised]="true" [outlined]="true"  />
+    <div class="flex  md:flex-row gap-1">
+      <p-button icon="pi pi-search" [raised]="true" [outlined]="true" (onClick)="searchProperties()" />
+      <p-button icon="pi pi-filter" [raised]="true" [outlined]="true"  (onClick)="confirm($event)" />
     </div>
   </div>
 </div>
@@ -54,8 +51,7 @@
                           <div class="flex flex-column md:align-items-end gap-5">
                               <span class="text-xl font-semibold text-900">{{ '$' + item.price }}</span>
                               <div class="flex flex-row-reverse md:flex-row gap-2">
-                                <p-button icon="pi pi-envelope" label="Email" [raised]="true" [outlined]="true" (click)="navigateToPageWithId('property-details', item.propertyId)" />
-                                  <p-button icon="pi pi-eye" label="Details" [raised]="true" [outlined]="true" (click)="navigateToPageWithId('property-details', item.propertyId)" />
+                                  <p-button icon="pi pi-eye" label="View" [raised]="true" [outlined]="true" (click)="navigateToPageWithId('property-details', item.propertyId)" />
                               </div>
                           </div>
                       </div>
@@ -72,3 +68,15 @@
     [totalRecords]="totalCount" 
     [rowsPerPageOptions]="[3, 5, 10, 20, 30]" />
 </div>
+
+
+<p-confirmPopup>
+  <ng-template pTemplate="content" let-message>
+      <div class="flex flex-column align-items-center w-full gap-3 border-bottom-1 surface-border p-3 mb-3">
+          <i [class]="message.icon" class="text-6xl text-primary-500"></i>
+          <app-filter></app-filter>
+      </div>
+  </ng-template>
+</p-confirmPopup>
+
+<app-filter></app-filter>
