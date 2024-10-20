@@ -1,34 +1,46 @@
-<form [formGroup]="myForm"   class="center-container" >
-    <div class="field">
-      <label for="username">Username</label>
-      <input
-        type="text"
-        pInputText
-        formControlName="username"
-        class="w-full"
-        name="username"
-      />
+<form [formGroup]="myForm" >
+
+  <div class="grid">
+    <div class="col-12 md:col-12 lg:col-6 sm:col-12 xl:6">
+      <div class="field">
+        <p-dropdown 
+          [options]="propertyTypes" 
+          formControlName="propertyTypeId"
+          optionLabel="name"
+          [style]="{width: '100%'}"
+          placeholder="Property Type" />
+      </div>
+
+      <div class="field">
+        <p-dropdown 
+          [options]="registrationTypes" 
+          formControlName="registrationTypeId"
+          placeholder="Registration"
+          [style]="{width: '100%'}"
+          optionLabel="name"/>
+      </div>
     </div>
 
-    <div class="field">
-      <label for="oldPassword">Old Password</label>
-      <input
-        type="password"
-        pInputText
-        formControlName="oldPassword"
-        class="w-full"
-        name="oldPassword"
-      />
+    <div class="col-12 md:col-12 lg:col-6 sm:col-12 xl:6">
+      <div class="field">
+        <p-dropdown 
+          [options]="prices" 
+          formControlName="minPrice"
+          placeholder="Min Price"
+          [style]="{width: '100%'}"
+          optionLabel="amount"/>
+      </div>
+
+      <div class="field">
+        <p-dropdown 
+          [options]="prices" 
+          formControlName="maxPrice"
+          placeholder="Max Price"
+          [style]="{width: '100%'}"
+          optionLabel="amount"/>
+      </div>
+
     </div>
 
-    <div class="field">
-      <label for="newPassword">New Password</label>
-      <input
-        type="password"
-        pInputText
-        formControlName="newPassword"
-        class="w-full"
-        name="newPassword"
-      />
-    </div>
+  </div>
 </form>

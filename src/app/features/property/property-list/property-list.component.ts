@@ -17,8 +17,9 @@ import { Router } from '@angular/router';
 import { AutoCompleteCompleteEvent, AutoCompleteModule } from 'primeng/autocomplete';
 import { LocationService } from '../../../_services/location.service';
 import { FilterComponent } from '../../../common/components/filter/filter.component';
-import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { LoadingListSkeletonComponent } from '../../../common/components/loading-list-skeleton/loading-list-skeleton.component';
 
 @Component({
   selector: 'app-property-list',
@@ -36,7 +37,8 @@ import { ConfirmationService, MessageService } from 'primeng/api';
     CommonModule, 
      AutoCompleteModule,
      FilterComponent,
-     ConfirmPopupModule,
+     OverlayPanelModule,
+     LoadingListSkeletonComponent
   ],
   providers: [ConfirmationService, MessageService]
 })
@@ -92,6 +94,8 @@ export class PropertyListComponent implements OnInit {
   }
 
 
+  
+
   onPageChange(event: any) {
       this.pageIndex = event.page + 1;
       this.pageSize = event.rows;
@@ -123,24 +127,23 @@ export class PropertyListComponent implements OnInit {
 
 
 
-  confirm(event: Event) {
-    this.confirmationService.confirm({
-        target: event.target as EventTarget,
-        message: 'Please confirm to proceed moving forward.',
-        icon: 'pi pi-filter',
-        acceptIcon: 'pi pi-check mr-1',
-        rejectIcon: 'pi pi-times mr-1',
-        acceptLabel: 'Filter',
-        rejectLabel: 'Clear',
-        rejectButtonStyleClass: 'p-button-outlined p-button-sm',
-        acceptButtonStyleClass: 'p-button-sm',
-        accept: () => {
-            this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'You have accepted', life: 3000 });
-        },
-        reject: () => {
-            this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
-        }
-    });
-}
+ filterdProperties(){
+   this.mapFilters();
+ }
+
+
+ clearFilter(){
+  this.filterComponent.generateForm();
+  this.mapFilters();
+ 
+ }
+
+ mapFilters(){
+  this.searchFilter.minPrice = this.filterComponent.myForm.value.minPrice.amount;
+  this.searchFilter.maxPrice = this.filterComponent.myForm.value.maxPrice.amount;
+  this.searchFilter.propertyTypeId = this.filterComponent.myForm.value.propertyTypeId.propertyTypeId;
+  this.searchFilter.registrationTypeId = this.filterComponent.myForm.value.registrationTypeId.registrationTypeId;
+  this.getAllProperties();
+ }
 
 }

@@ -1,11 +1,75 @@
+<div class="mt-2">
+  <form [formGroup]="myForm" (ngSubmit)="onSubmit()" >
+    <p-card  [style]="{ width: '100%' }">
+      <div class="field">
+        <label for="userName">User Name</label>
+        <input
+          type="text"
+          pInputText
+          formControlName="userName"
+          class="w-full"
+          name="userName"
+          [readOnly]="true"
+        />
+      </div>
 
+      <div class="field">
+        <label for="email">Email</label>
+        <input
+          type="text"
+          pInputText
+          formControlName="email"
+          class="w-full"
+          name="email"
+          [readOnly]="true"
+        />
+      </div>
+      <div class="field">
+        <label for="firstName">First Name</label>
+        <input
+          type="firstName"
+          pInputText
+          formControlName="firstName"
+          class="w-full"
+          name="firstName"
+        />
+      </div>
 
-<div class="card flex justify-content-center">
-  <p-toggleButton 
-      onIcon={{themeIcon}}
-      offIcon={{themeIcon}}
-      [(ngModel)]="checked" 
-      onLabel={{label}}
-      offLabel={{label}}
-      (onChange)="changeTheme(checked ? 'dark':'light')" />
+      <div class="field">
+        <label for="lastName">Last Name</label>
+        <input
+          type="lastName"
+          pInputText
+          formControlName="lastName"
+          class="w-full"
+          name="lastName"
+        />
+      </div>
+
+      <div class="field">
+        <label for="idNumber">ID Number</label>
+        <input
+          type="idNumber"
+          pInputText
+          formControlName="idNumber"
+          class="w-full"
+          name="idNumber"
+        />
+      </div>
+
+      <div class="field">
+        <label for="phoneNumber">Phone Number</label>
+        <input
+          type="phoneNumber"
+          pInputText
+          formControlName="phoneNumber"
+          class="w-full"
+          name="phoneNumber"
+        />
+      </div>
+      <p-button  type="submit" [disabled]="myForm.invalid"  icon="pi pi-times"  label="Save Changes" [outlined]="true" [raised]="true"  ></p-button>
+    </p-card>
+  </form>
 </div>
+
+<p-toast />

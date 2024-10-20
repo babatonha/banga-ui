@@ -14,7 +14,7 @@
     <!-- Buttons -->
     <div class="flex  md:flex-row gap-1">
       <p-button icon="pi pi-search" [raised]="true" [outlined]="true" (onClick)="searchProperties()" />
-      <p-button icon="pi pi-filter" [raised]="true" [outlined]="true"  (onClick)="confirm($event)" />
+      <p-button icon="pi pi-filter" [raised]="true" [outlined]="true"  (onClick)="op.toggle($event)" />
     </div>
   </div>
 </div>
@@ -22,7 +22,7 @@
 
 
 
-<div class="card">
+<div class="card"  *ngIf="propertiesDataSource.length > 0">
   <p-dataView #dv 
     [value]="propertiesDataSource" 
     [style]="{ 'height': '10%' }"
@@ -65,18 +65,24 @@
     (onPageChange)="onPageChange($event)" 
     [first]="first"
     [rows]="pageSize" 
-    [totalRecords]="totalCount" 
-    [rowsPerPageOptions]="[3, 5, 10, 20, 30]" />
+    [totalRecords]="totalCount" />
 </div>
 
 
-<p-confirmPopup>
-  <ng-template pTemplate="content" let-message>
-      <div class="flex flex-column align-items-center w-full gap-3 border-bottom-1 surface-border p-3 mb-3">
-          <i [class]="message.icon" class="text-6xl text-primary-500"></i>
-          <app-filter></app-filter>
-      </div>
-  </ng-template>
-</p-confirmPopup>
+<app-loading-list-skeleton *ngIf="propertiesDataSource.length < 1"></app-loading-list-skeleton>
 
-<app-filter></app-filter>
+
+<div class="card flex justify-content-center">
+    <p-overlayPanel #op [style]="{ width: '50%' }">
+        <div class="flex flex-column gap-3">
+            <app-filter></app-filter>
+
+            <div class="card flex flex-wrap gap-1 justify-content-center">
+                <p-button icon="pi pi-times"  severity="secondary" (onClick)="clearFilter()" label="Clear" [outlined]="true" [raised]="true"  ></p-button>
+                <p-button icon="pi pi-filter"  label="Filter"  (onClick)="filterdProperties()"   [outlined]="true" [raised]="true"></p-button>
+              </div>
+        
+        </div>
+        
+    </p-overlayPanel>
+</div>

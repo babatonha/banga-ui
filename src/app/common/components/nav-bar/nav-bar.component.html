@@ -1,4 +1,4 @@
-<p-menubar [model]="items" [style]="{'position':'fixed','top':'0','z-index':'999','width':'100%', 'margin':'0'}" >
+<p-menubar [model]="items" [style]="{'position':'fixed','top':'0','z-index':'999','width':'100%', 'margin':'0', 'left':'0'}" >
   <ng-template pTemplate="item" let-item let-root="root">
       <a pRipple class="flex align-items-center p-menuitem-link" [routerLink]="item.routerLink">
           <span [class]="item.icon"></span>

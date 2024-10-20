@@ -112,8 +112,8 @@ export class NavBarComponent implements OnInit {
   }
 
   save(severity: string) {
-    this.messageService.add({ severity: severity, summary: 'Success', detail: 'Data Saved' });
-}
+    //this.messageService.add({ severity: severity, summary: 'Success', detail: 'Data Saved' });
+  }
 
 changeTheme(theme: string) {
 
