@@ -6,5 +6,6 @@ export interface User{
     token : string;
     firstName: string;
     lastName: string;
+    isOnline: boolean;
     roles: string[];
 }
