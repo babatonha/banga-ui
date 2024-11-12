@@ -1,0 +1,47 @@
+.clickable-div:hover {
+    cursor: pointer;
+}
+
+
+.chat-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    overflow-y: auto;
+    height: 400px; /* Adjust as necessary */
+  }
+  
+  .message {
+    margin-bottom: 1rem;
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .sent {
+    align-self: flex-end;
+    background-color: #d1e7dd;
+  }
+  
+  .received {
+    align-self: flex-start;
+    background-color: #f8d7da;
+  }
+  
+  .message-content {
+    max-width: 80%;
+  }
+  
+  .message-date {
+    font-size: 0.8rem;
+    color: #888;
+    text-align: right;
+  }
+
+  textarea {
+    width: 100%; /* or set a specific width */
+}

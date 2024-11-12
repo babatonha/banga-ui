@@ -11,6 +11,13 @@ import { AvatarModule } from 'primeng/avatar';
 import { DataViewModule } from 'primeng/dataview';
 import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
+import { BadgeModule } from 'primeng/badge';
+import { CapitalizePipe } from '../../../_pipes/capitalize.pipe';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
+import { CardModule } from 'primeng/card';
+import { PanelModule } from 'primeng/panel';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
   selector: 'app-chat',
@@ -20,10 +27,18 @@ import { TagModule } from 'primeng/tag';
   imports: [
     CommonModule,
     FormsModule,
+    InputTextareaModule,
+    InputTextModule,
+    InputTextareaModule,
     AvatarModule,
     DataViewModule ,
     ButtonModule, 
-    TagModule
+    TagModule,
+    BadgeModule,
+    CapitalizePipe,
+    ScrollPanelModule,
+    CardModule,
+    PanelModule
   ],
 })
 export class ChatComponent implements OnInit  {
@@ -35,6 +50,9 @@ export class ChatComponent implements OnInit  {
   hub: signalR.HubConnection | undefined;
   message: string = ""; 
 
+  messages: ChatModel[] = [];
+
+  threadVisible: boolean = false;
 
   constructor( private http: HttpClient, 
     private accountService: AccountService,
@@ -42,19 +60,15 @@ export class ChatComponent implements OnInit  {
     this.getCurrentUser();
     this.hub = new signalR.HubConnectionBuilder().withUrl(`${this.baseService.hubUrl}chat-hub`).build();
 
-    this.hub.start().then(()=> {
-      console.log("Connection is started...");  
-      
+    this.hub.start().then(()=> {    
       this.hub?.invoke("Connect", this.user.id);
 
       this.hub?.on("Users", (res:User) => {
-        console.log(res);
         this.users.find(p=> p.id == res.id)!.isOnline = res.isOnline;        
       });
 
       this.hub?.on("Messages",(res:ChatModel)=> {
-        console.log(res);        
-        
+
         if(this.selectedUserId == res.userId){
           this.chats.push(res);
         }
@@ -81,7 +95,7 @@ export class ChatComponent implements OnInit  {
     this.selectedUserId = user.id;
     this.selectedUser = user;
 
-    this.http.get(`${this.baseService.baseUrl}Chat/GetChats?userId=${this.user.id}&toUserId=${this.selectedUserId}`).subscribe((res:any)=>{
+    this.http.get(`${this.baseService.baseUrl}Chat/GetChats/${this.user.id}/${this.selectedUserId}`).subscribe((res:any)=>{
       this.chats = res;
     });
   }
@@ -95,11 +109,13 @@ export class ChatComponent implements OnInit  {
     const data ={
       "userId": this.user.id,
       "toUserId": this.selectedUserId,
-      "message": this.message
+      "message": this.message,
+      "date": new Date().toString()
     }
-    this.http.post<ChatModel>(`{this.baseService.baseUrl}Chat/SendMessage`,data).subscribe(
+    this.http.post<ChatModel>(`${this.baseService.baseUrl}Chat/SendMessage`,data).subscribe(
       (res)=> {
-        this.chats.push(res);
+        console.log(res);
+        this.chats.push(data);
         this.message = "";
     });
   }
@@ -115,6 +131,17 @@ export class ChatComponent implements OnInit  {
         }
       }
     })
+  }
+
+
+  onUserClick(user: User){
+    this.threadVisible = true;
+    this.selectedUser = user;
+    this.changeUser(user);
+  }
+
+  onChatClick(){
+    this.threadVisible = false;
   }
 
  }
