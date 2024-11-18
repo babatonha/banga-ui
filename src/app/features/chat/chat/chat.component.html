@@ -62,16 +62,18 @@
                 </div>
             </div>
             </ng-template>
- 
 
-            <p-scrollPanel [style]="{ width: '100%', height: '56vh' }">
-                <div *ngFor="let msg of chats" class="message" [ngClass]="{'sent': msg.userId === 1, 'received': msg.userId !== 1}">
+            
+
+            <div #scrollContainer class="scroll-container">
+                <div *ngFor="let msg of chats" class="message" [ngClass]="{'sent': msg.userId === this.user.id, 'received': msg.userId !== this.user.id}">
                     <div class="message-content">
                       <p>{{ msg.message }}</p>
                       <small class="message-date">{{ msg.date }}</small>
                     </div>
                   </div>
-            </p-scrollPanel>
+              </div>
+ 
         </p-panel>  
       </div>
 

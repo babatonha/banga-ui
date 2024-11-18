@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { User } from '../../../_models/user';
 import { ChatModel } from '../../../_models/chat';
 import { HttpClient } from '@angular/common/http';
@@ -13,7 +13,7 @@ import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
 import { BadgeModule } from 'primeng/badge';
 import { CapitalizePipe } from '../../../_pipes/capitalize.pipe';
-import { ScrollPanelModule } from 'primeng/scrollpanel';
+import { ScrollPanel, ScrollPanelModule } from 'primeng/scrollpanel';
 import { CardModule } from 'primeng/card';
 import { PanelModule } from 'primeng/panel';
 import { InputTextareaModule } from 'primeng/inputtextarea';
@@ -54,6 +54,10 @@ export class ChatComponent implements OnInit  {
 
   threadVisible: boolean = false;
 
+
+  @ViewChild("scrollContainer") sContainer!: ElementRef;
+  items = Array.from({ length: 100 }, (_, i) => `Item ${i + 1}`);
+
   constructor( private http: HttpClient, 
     private accountService: AccountService,
     private baseService: BaseService ){
@@ -71,6 +75,7 @@ export class ChatComponent implements OnInit  {
 
         if(this.selectedUserId == res.userId){
           this.chats.push(res);
+          this.scrollToBottom();
         }
       })
     })
@@ -78,6 +83,22 @@ export class ChatComponent implements OnInit  {
 
   ngOnInit() {
     this.getUsers();
+
+  }
+
+
+  scrollToBottom() {
+
+    setTimeout(() => {
+      console.log(this.sContainer)
+      if(this.sContainer){
+        console.log(this.sContainer)
+        const container = this.sContainer.nativeElement;
+        container.scrollTop = container.scrollHeight; 
+      }
+    }, 100);
+
+
   }
 
   getUsers(){
@@ -94,9 +115,9 @@ export class ChatComponent implements OnInit  {
   changeUser(user: User){
     this.selectedUserId = user.id;
     this.selectedUser = user;
-
     this.http.get(`${this.baseService.baseUrl}Chat/GetChats/${this.user.id}/${this.selectedUserId}`).subscribe((res:any)=>{
       this.chats = res;
+      this.scrollToBottom();
     });
   }
 
@@ -114,7 +135,7 @@ export class ChatComponent implements OnInit  {
     }
     this.http.post<ChatModel>(`${this.baseService.baseUrl}Chat/SendMessage`,data).subscribe(
       (res)=> {
-        console.log(res);
+        this.scrollToBottom();
         this.chats.push(data);
         this.message = "";
     });
@@ -127,7 +148,7 @@ export class ChatComponent implements OnInit  {
         if(user){
           this.user = user;
         }else{
-            this.user  = this.accountService.getLoggedInUser(); //try getting it from local storage
+            this.user  = this.accountService.getLoggedInUser();
         }
       }
     })

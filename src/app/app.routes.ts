@@ -7,7 +7,7 @@ export const routes: Routes = [
     {path:'*', pathMatch:'full', redirectTo:'home'},
     {path:'', pathMatch:'full', redirectTo:'home'},
     {path:'home', component: HomeComponent},
-    {path:'chat', component: ChatComponent},
+    {path:'chat', loadComponent: ()=> import('./features/chat/chat/chat.component').then(mod => mod.ChatComponent) , canActivate: [authGuard]},
     {path: 'login', loadComponent: () => import('./features/authentication/login/login.component').then(mod => mod.LoginComponent)},
     {path: 'register', loadComponent: () => import('./features/authentication/register/register.component').then(mod => mod.RegisterComponent)},
     {path: 'forgot-password', loadComponent: () => import('./features/authentication/forgot-password/forgot-password.component').then(mod => mod.ForgotPasswordComponent)},

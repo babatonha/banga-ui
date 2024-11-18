@@ -26,12 +26,14 @@ import { FormsModule } from '@angular/forms';
     SplitButtonModule,
     ToastModule,
     MenubarModule,
-     BadgeModule, AvatarModule, 
+     BadgeModule, 
+     AvatarModule, 
      InputTextModule,
      RippleModule,
      ToggleButtonModule,
      FormsModule,
-     FooterComponent ],
+     FooterComponent 
+    ],
      providers: [MessageService]
 })
 export class NavBarComponent implements OnInit {
@@ -67,10 +69,16 @@ export class NavBarComponent implements OnInit {
           routerLink: 'profile'
       },
       {
+        label: 'Messages',
+        icon: 'pi pi-fw pi-envelope',
+        routerLink: 'chat'
+      },
+
+      {
         label: 'My Properties',
         icon: 'pi pi-fw pi-warehouse',
         routerLink: 'my-property'
-    },
+      },
 
       {
           separator: true

@@ -14,34 +14,73 @@
     height: 400px; /* Adjust as necessary */
   }
   
-  .message {
-    margin-bottom: 1rem;
+  .sent, .received {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  }
+
+  .sent {
+    align-self: flex-start; 
+    background-color: #d1e7dd; /* Light greenish color */
+    color: #000; /* Text color for sent message */
+    border-radius: 15px 15px 0 15px; /* Rounded corners */
     padding: 10px;
-    border-radius: 5px;
+    margin: 5px 0;
+    max-width: 90%; /* Max width to avoid overly wide messages */
+    word-wrap: break-word; /* Word breaking if content is long */
+  }
+  
+  /* Received message styles (left-aligned) */
+  .received {
+    align-self: flex-start; /* Align to the left */
+    background-color: #e5e7eb; /* Light pinkish color */
+    color: #000; /* Text color for received message */
+    border-radius: 15px 15px 15px 0; /* Rounded corners */
+    padding: 10px;
+    margin: 5px 0;
+    max-width: 90%; /* Max width to avoid overly wide messages */
+    word-wrap: break-word; /* Word breaking if content is long */
+  }
+  
+  /* The message container */
+  .message {
     display: flex;
     flex-direction: column;
+    max-width: 100%;
+    justify-content: flex-start;
   }
   
-  .sent {
-    align-self: flex-end;
-    background-color: #d1e7dd;
-  }
-  
-  .received {
-    align-self: flex-start;
-    background-color: #f8d7da;
-  }
-  
+  /* The message content (text and timestamp) */
   .message-content {
-    max-width: 80%;
+    display: flex;
+    flex-direction: column;
+    word-wrap: break-word;
   }
   
+  /* Styling for the message timestamp */
   .message-date {
+    margin-top: 5px;
     font-size: 0.8rem;
-    color: #888;
+    color: #888; /* Light gray for timestamp */
     text-align: right;
   }
 
+
   textarea {
     width: 100%; /* or set a specific width */
+}
+
+#messageContainer{
+  height: 200px;
+}
+
+
+
+.scroll-container {
+  height: 56vh;       /* Define the height you want for the scrollable area */
+  overflow-y: auto;    /* Allow vertical scrolling */
+  padding: 10px;
+}
+
+.scroll-container::-webkit-scrollbar {
+  display: none;              /* Hide the scrollbar */
 }
