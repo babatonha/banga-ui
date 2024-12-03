@@ -1,3 +1,15 @@
-:host {
-  display: block;
+@media (max-width: 768px) {
+  .fc-toolbar-title {
+    font-size: 16px; /* Adjust title font size */
+  }
+
+  .fc-prev-button, .fc-next-button, .fc-today-button {
+    display: none; /* Hide navigation buttons on mobile */
+  }
+
+  .fc-custom-button {
+    display: block; /* Ensure custom button is visible */
+    font-size: 14px;
+    padding: 5px 10px;
+  }
 }
