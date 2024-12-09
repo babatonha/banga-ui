@@ -1,0 +1,33 @@
+
+<full-calendar [options]="calendarOptions"></full-calendar>
+
+
+<p-dialog 
+    header="Viewing Details" 
+    [modal]="true" 
+    [(visible)]="visible" 
+    [style]="{ width: '50rem' }" 
+    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" 
+    [maximizable]="true">
+
+    <div class="flex flex-column mb-5">
+        <label for="calendar-12h" class="font-semibold mb-2">Date and Time</label>
+        <p-calendar 
+            inputId="calendar-12h" 
+            [(ngModel)]="viewing.date" 
+            [showTime]="true" 
+            [hourFormat]="hourFormat" 
+            [minDate]="minDate" />
+        </div>
+    
+        <div class="flex flex-column mb-3">
+            <label for="notes" class="font-semibold mb-2">Notes</label>
+            <textarea pInputTextarea id="notes"  class="flex-auto w-full" rows="18" [(ngModel)]="viewing.note" autocomplete="off"></textarea>
+        </div>
+    <div class="flex justify-content-end gap-2">
+      <p-button label="Cancel" severity="secondary" (onClick)="visible = false" />
+      <p-button label="Save" (onClick)="saveViewing()" />
+    </div>
+  </p-dialog>
+  
+  

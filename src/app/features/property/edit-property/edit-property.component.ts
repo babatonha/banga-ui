@@ -119,10 +119,6 @@ export class EditPropertyComponent implements OnInit {
     this.stepThreeComponent.onTemplatedUpload();
   }
 
-
-
-
-
   onSubmit(nextCallback: any){
    
     if(!this.stepOneComponent.stepOneForm.valid){

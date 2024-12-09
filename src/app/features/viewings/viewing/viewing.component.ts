@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { CalendarComponent } from '../../../common/components/calendar/calendar.component';
+import { CalendarComponent } from '../calendar/calendar.component';
 import { CommonModule } from '@angular/common';
 
 @Component({
