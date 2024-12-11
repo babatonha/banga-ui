@@ -11,10 +11,14 @@
     [maximizable]="true">
 
     <div class="flex flex-column mb-5">
+        <div class="flex flex-column mb-3">
+            <label for="notes" class="font-semibold mb-2">Title</label>
+            <input id="title" type="text" pInputText [(ngModel)]="viewing.title" />
+        </div>
         <label for="calendar-12h" class="font-semibold mb-2">Date and Time</label>
         <p-calendar 
             inputId="calendar-12h" 
-            [(ngModel)]="viewing.date" 
+            [(ngModel)]="viewing.start" 
             [showTime]="true" 
             [hourFormat]="hourFormat" 
             [minDate]="minDate" />

@@ -1,10 +1,10 @@
 export interface Viewing{
-    viewingId : number;
+    id : number;
     propertyId : number | null;
     title : string | null;
-    date : Date | null;
     allocatedTo : number | null;
     note : string | null;
     viewingStatus : string | null;
-    isConfirmed : boolean | null;
+    backgroundColor: string | null;
+    start: Date | null;
 }

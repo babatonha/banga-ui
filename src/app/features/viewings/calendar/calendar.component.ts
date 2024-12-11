@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, ViewChild } from '@angular/core';
 import {  FullCalendarModule } from '@fullcalendar/angular'; 
-import { CalendarOptions } from '@fullcalendar/core'; 
+import { CalendarOptions, EventClickArg, EventSourceInput } from '@fullcalendar/core'; 
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { DialogModule } from 'primeng/dialog';
@@ -38,56 +38,27 @@ export class CalendarComponent implements OnInit {
    hourFormat: string  = "12";
    notes: string | undefined;
    minDate: Date = new Date();
-   calendarOptions: CalendarOptions  = {
-    initialView: 'dayGridMonth',
-    headerToolbar: {
-      left: this.isMobile ? 'customButton' : 'customButton',
-      center: 'title',
-      right: this.isMobile ? 'dayGridMonth' : 'prev,next,dayGridMonth,dayGridWeek,dayGridDay'
-    },
-    customButtons: {
-      customButton: {
-        text: 'New',
-        click: () => {
-          this.visible = true;
-        }
-      }
-    },
-    plugins: [dayGridPlugin, interactionPlugin],
-    //dateClick: (arg) => this.handleDateClick(arg),
-    events: [
-      { title: 'event 1', date: '2024-12-01', propertyId: 1 },
-      { title: 'event 2', date: '2024-12-02' }  
-    ],
-    eventClick: (e:any) => {
-      this.visible = true;
-    }
-  };
+   @Input() eventList!: any;
+   calendarOptions!: CalendarOptions;
    viewing: Viewing = {
-    viewingId: 0,
+    id: 0,
     propertyId : 0,
     title: null,
-    date : null,
     allocatedTo : 0,
     note : null,
     viewingStatus : 'Available',
-    isConfirmed : false
+    backgroundColor: 'green',
+    start: null
 
    };
-
-   eventList: Viewing[] = [];
-   events: any
-
-
-
-
+   
   constructor(private messageService: MessageService,
     private viewingService: ViewingService) { 
 
   }
 
   ngOnInit() {
-    this.loadCalendar();
+   this.loadCalendar();
   }
 
 
@@ -117,35 +88,42 @@ export class CalendarComponent implements OnInit {
 
 
   loadCalendar(){
-    this.viewingService.getPropertyViewingsByUserId(1,1).subscribe({
-      next: (response) => {
-        this.calendarOptions = {
-          initialView: 'dayGridMonth',
-          headerToolbar: {
-            left: this.isMobile ? 'customButton' : 'customButton',
-            center: 'title',
-            right: this.isMobile ? 'dayGridMonth' : 'prev,next,dayGridMonth,dayGridWeek,dayGridDay'
-          },
-          customButtons: {
-            customButton: {
-              text: 'New',
-              click: () => {
-                this.visible = true;
-              }
-            }
-          },
-          plugins: [dayGridPlugin, interactionPlugin],
-          //dateClick: (arg) => this.handleDateClick(arg),
-          events: [
-            { title: 'event 1', date: '2024-12-01', propertyId: 1 },
-            { title: 'event 2', date: '2024-12-02' }  
-          ],
-          eventClick: (e:any) => {
+    this.calendarOptions = {
+      initialView: 'dayGridMonth',
+      headerToolbar: {
+        left: this.isMobile ? 'customButton' : 'customButton',
+        center: 'title',
+        right: this.isMobile ? 'dayGridMonth' : 'prev,dayGridMonth,dayGridWeek,dayGridDay,next'
+      },
+      customButtons: {
+        customButton: {
+          text: 'New',
+          click: () => {
             this.visible = true;
           }
-        };
+        }
+      },
+      
+      plugins: [dayGridPlugin, interactionPlugin],
+      events:this.eventList,
+      eventClick: (e:EventClickArg ) => {
+        // this.viewing = {
+        //   id: parseInt(e.event.id),
+        //   propertyId : 0,
+        //   title: e.event.title,
+        //   allocatedTo : 0,
+        //   note : e.event.note,
+        //   viewingStatus : 'Available',
+        //   backgroundColor: 'green',
+        //   start: null
+        // }
+        // console.log(this.eventList)
+        console.log(e.event)
+        //this.viewing = this.eventList.find((x: any) => x.id === e.event.id);
+        console.log(this.viewing );
+        this.visible = true;
       }
-    });
+    };
 
   }
 
