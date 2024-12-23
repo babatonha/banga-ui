@@ -22,12 +22,14 @@
     <div class="col-12 md:col-4 lg:col-4 sm:col-12 xl:4">
         <div class="border-1 surface-border border-round m-2 p-3">
             <div class="text-center p-3 border-round-sm bg-primary font-bold ">Law Fim and Logo</div>
-            <div class="text-center p-3 border-round-sm bg-primary font-bold ">Law firm review count</div>
-            <div class="text-center p-3 border-round-sm bg-primary font-bold ">Current Offers Count/ Max Offer Amount</div>
-            <div class="text-center p-3 border-round-sm bg-primary font-bold ">Likes and Like Button</div>
-            <div class="text-center p-3 border-round-sm bg-primary font-bold ">Make Offer/Edit||Contact Laywer</div>
-            <div class="text-center p-3 border-round-sm bg-primary font-bold ">Likes and Like Button</div>
-            <div class="text-center p-3 border-round-sm bg-primary font-bold ">Make Offer/Edit||Contact Laywer</div>
+            <br>
+            <div class="text-center p-3 border-round-sm bg-primary font-bold ">Review Summary</div>
+            <br>
+            <br>
+            <br>
+            <br>
+            <p-button [raised]="true" label="Contact  Law Firm"   [outlined]="true" severity="secondary" [style]="{'width': '100%'}"/>
+            <p-button [raised]="true" label="Message Owner"   [outlined]="true" severity="secondary"  [style]="{'width': '100%'}"/>
         </div>
 
     </div>
@@ -36,37 +38,68 @@
 
 
 <div *ngIf="currentProperty">
-    <p-card header="{{currentProperty.price | currency}}">
-        <p class="m-0">
-             {{currentProperty.propertyTypeName}} with  {{currentProperty.registrationTypeId}}
-        </p>
-
-        <p class="m-0">
-            {{currentProperty.address}}, {{currentProperty.cityName}}
-       </p>
-       <div class="card flex align-items-center gap-2 flex-wrap mt-2">
-        <p-chip label="{{currentProperty.squareMetres}} &#13217;"  />
-        <p-chip label="{{currentProperty.numberOfRooms}} Rooms"  />
-        <p-chip label="{{currentProperty.numberOfBathrooms}} Bathrooms"  />
-        <p-chip label="{{currentProperty.parkingSpots}} Parking"  />
-    </div>
-    </p-card>
     
+    <p-panel [toggleable]="true" [collapsed]="false">
+        <ng-template pTemplate="header">
+            <div class="flex items-center gap-2">
+                <span class="font-bold">{{currentProperty.price | currency}}</span>
+            </div>
+        </ng-template>
+        <p class="m-0">
+            {{currentProperty.propertyTypeName}} with  {{currentProperty.registrationTypeId}}
+       </p>
+
+       <p class="m-0">
+           {{currentProperty.address}}, {{currentProperty.cityName}}
+      </p>
+      <div class="card flex align-items-center gap-2 flex-wrap mt-2">
+            <p-chip label="{{currentProperty.squareMetres}} &#13217;"  />
+            <p-chip label="{{currentProperty.numberOfRooms}} Rooms"  />
+            <p-chip label="{{currentProperty.numberOfBathrooms}} Bathrooms"  />
+            <p-chip label="{{currentProperty.parkingSpots}} Parking"  />
+        </div>
+
+
+        <ng-template pTemplate="footer">
+            <div class="flex flex-wrap items-center justify-between gap-4">
+                <div class="flex items-center gap-2">
+                    <p-button icon="pi pi-thumbs-up" severity="secondary" >  {{currentProperty.numberOfLikes}}</p-button>
+                </div>
+            </div>
+        </ng-template>
+
+    </p-panel>
+
     <br>
-    <p-card header="Description">
+    <p-panel header="Description" [toggleable]="true" [collapsed]="true">
         <p class="m-0">
             {{currentProperty.description}}
         </p>
-    </p-card>
+    </p-panel>
+
+
     <br>
-    
-    <p-card header="Amenities">
+    <p-panel header="Amenities" [toggleable]="true" [collapsed]="true">
         <div class="card flex align-items-center gap-2 flex-wrap">
             @for (item of this.currentAmenities; track $index) {
                 <p-chip label="{{item.name}}" />
             }
         </div>
-    </p-card>
+    </p-panel>
+
+    <br>
+    <p-panel header="Offers" [toggleable]="true" [collapsed]="true">
+      <app-my-offers></app-my-offers>
+    </p-panel>
+
+    <br>
+    <p-panel header="Viewings" [toggleable]="true" [collapsed]="true">
+        <p class="m-0">
+            {{currentProperty.description}}
+        </p>
+    </p-panel>
+
+
 </div>
 
 

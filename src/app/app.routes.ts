@@ -19,4 +19,5 @@ export const routes: Routes = [
     {path: 'property-details/:id', loadComponent: () => import('./features/property/property-details/property-details.component').then(mod => mod.PropertyDetailsComponent), canActivate: [authGuard]},
     {path: 'law-firms', loadComponent: () => import('./features/law-firm/law-firm-list/law-firm-list.component').then(mod => mod.LawFirmListComponent)},
     {path: 'viewings', loadComponent: () => import('./features/viewings/viewing/viewing.component').then(mod => mod.ViewingComponent)},
+    {path: 'offers', loadComponent: () => import('./features/offer/my-offers/my-offers.component').then(mod => mod.MyOffersComponent)},
 ];

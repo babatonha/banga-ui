@@ -1,0 +1,61 @@
+
+<p-card header="Offer" [style]="{ width: '100%', overflow: 'hidden' }">
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="field">
+      <label for="amount" [style]="{width: '100%', position:'block'}">Offer Amount*</label>
+      <p-inputNumber 
+        formControlName="amount"
+        inputId="currency-us" 
+        mode="currency" 
+        currency="USD" 
+        name="amount"
+        locale="en-US" 
+        styleClass="w-full"
+        class="w-full"
+        [style]="{width: '100%'}" />
+      <small
+        *ngIf="(form.controls['amount'].dirty || form.controls['amount'].touched)"
+        class="block p-error"
+      >
+        <div *ngIf="form.controls['amount'].errors?.['required']">Offer amount is required.</div>
+      </small>
+    </div>
+  
+    <div class="field">
+      <label for="paymentMethodId" class="block mt-2">Payment Method*</label>
+      <p-dropdown 
+        [options]="paymentMethods" 
+        formControlName="paymentMethodId"
+        [editable]="true" 
+        optionLabel="name"
+        [style]="{width: '100%'}"
+        (onChange)="onPaymentMethodTypeChange($event)" />
+    
+      <small
+        *ngIf="(form.controls['paymentMethodId'].dirty || form.controls['paymentMethodId'].touched)"
+        class="block p-error"
+      >
+        <div *ngIf="form.controls['paymentMethodId'].errors?.['required']">Payment Method is required.</div>
+      </small>
+    </div>
+  
+  
+    <div class="field">
+      <label for="address">Description*</label>
+      <textarea pInputTextarea  class="flex-auto w-full" rows="3" formControlName="description" name="description" autocomplete="off"></textarea>
+      <small
+        *ngIf="form.controls['description'].dirty || form.controls['description'].touched"
+        class="block p-error"
+      >
+        <div *ngIf="form.controls['description'].errors?.['required']">Description is required.</div>
+      </small>
+    </div>
+  </form>
+  
+  <div class="flex py-4">
+    <p-button class="btn" [raised]="true" label="Cancel" [outlined]="true" (onClick)="onSubmit()"  />
+    <p-button class="btn" [raised]="true" label="Save" [outlined]="true" (onClick)="onSubmit()"  />
+</div>
+</p-card>
+

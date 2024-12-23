@@ -14,6 +14,8 @@ import { ChipModule } from 'primeng/chip';
 import { Amenities } from '../../../_models/amenities';
 import { PropertyPhotoService } from '../../../_services/propertyPhoto.service';
 import { ImageModule } from 'primeng/image';
+import { ButtonModule } from 'primeng/button';
+import { MyOffersComponent } from '../../offer/my-offers/my-offers.component';
 
 @Component({
   selector: 'app-property-details',
@@ -25,7 +27,9 @@ import { ImageModule } from 'primeng/image';
     PanelModule,
     CardModule,
     ImageModule,
-    ChipModule
+    ChipModule,
+    ButtonModule,
+    MyOffersComponent
   ],
   providers: [MessageService]
 })
