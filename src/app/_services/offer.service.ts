@@ -2,7 +2,6 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { BaseService } from "./base.service";
 import { Offer } from "../_models/offer";
-import { UserOffers } from "../_models/userOffers";
 
 
 @Injectable({
@@ -28,7 +27,7 @@ import { UserOffers } from "../_models/userOffers";
     }
 
     getUserOffers(userId: number){
-        return this.http.get<UserOffers[]>(`${this.baseService.baseUrl}PropertyOffer/UserOffers/${userId}`);
+        return this.http.get<Offer[]>(`${this.baseService.baseUrl}PropertyOffer/UserOffers/${userId}`);
     }
 
     confirmOffer(offerId: number, isOfferConfirmed: boolean){

@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { NewPropertyComponent } from "../../property/new-property/new-property.component";
+import { Component, Input, OnInit } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
@@ -8,12 +7,13 @@ import { ToastModule } from 'primeng/toast';
 import { DropdownModule } from 'primeng/dropdown';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { MessageService } from 'primeng/api';
-import { Offer } from '../../../_models/offer';
-import { Status } from '../../../_models/status';
 import { PaymentMethodModel } from '../../../_models/paymentMethod';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { CardModule } from 'primeng/card';
+import { OfferService } from '../../../_services/offer.service';
+import { Offer } from '../../../_models/offer';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-offer',
@@ -36,11 +36,17 @@ import { CardModule } from 'primeng/card';
 })
 export class NewOfferComponent implements OnInit {
     form!: FormGroup;
+    offerRecord!: Offer;
+    @Input() currPropertyId: number = 0;
+    @Input() currLoggedUserId: number = 0;
 
-    paymentMethods: PaymentMethodModel[] = [];
+
+    paymentMethods: PaymentMethodModel[] = [{id: 1, name: 'Cash'}, {id: 2, name: 'Instalment'}, {id: 3, name: 'Cash & Instalment'}];
 
   constructor(private fb: FormBuilder,
-    private messageService: MessageService
+    private offerService: OfferService,
+    private messageService: MessageService,
+    private router: Router,
 
   ) { }
 
@@ -53,22 +59,29 @@ export class NewOfferComponent implements OnInit {
 
   onSubmit(){
     if (this.form.valid) {
-      // this.accountService.login(this.stepOneForm.value).subscribe({
-      //   next: () =>{
-      //     this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Successfully logged in' });
-      //   },
-      //   error: error => {
-      //     this.messageService.add({ severity: 'error', summary: 'Error', detail: "Username or password is incorrect" });
-      //   }
-      // })
+      this.offerRecord = this.form.value;
+      this.offerRecord.paymentMethodId = this.form.value.paymentMethodId.id;
+
+      this.offerService.createOffer(this.offerRecord).subscribe({
+        next: () =>{
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Successful' });
+        },
+        error: error => {
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: "Failed to create" });
+        }
+      })
     }
+  }
+
+  backClick(){
+
   }
 
   loadNewOffer(){
     this.form =   this.fb.group({
-      propertyOfferId: [0, [Validators.required]],
-      propertyId: [0, [Validators.required]],
-      offerByUserId: [0, [Validators.required]],
+      propertyOfferId: [0],
+      propertyId: [this.currPropertyId],
+      offerByUserId: [this.currLoggedUserId],
       buyerName: [null],
       description: ['', [Validators.required]],
       statusId: [0, [Validators.required]],

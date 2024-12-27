@@ -20,4 +20,5 @@ export const routes: Routes = [
     {path: 'law-firms', loadComponent: () => import('./features/law-firm/law-firm-list/law-firm-list.component').then(mod => mod.LawFirmListComponent)},
     {path: 'viewings', loadComponent: () => import('./features/viewings/viewing/viewing.component').then(mod => mod.ViewingComponent)},
     {path: 'offers', loadComponent: () => import('./features/offer/my-offers/my-offers.component').then(mod => mod.MyOffersComponent)},
+    {path: 'offer-new/:id', loadComponent: () => import('./features/offer/new-offer/new-offer.component').then(mod => mod.NewOfferComponent)},
 ];
