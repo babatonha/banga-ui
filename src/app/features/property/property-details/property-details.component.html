@@ -30,6 +30,7 @@
             <br>
             <p-button [raised]="true" label="Contact  Law Firm"   [outlined]="true" severity="secondary" [style]="{'width': '100%'}"/>
             <p-button [raised]="true" label="Message Owner"   [outlined]="true" severity="secondary"  [style]="{'width': '100%'}"/>
+            <p-button [raised]="true" label="Make Offer"   [outlined]="true" severity="secondary"  [style]="{'width': '100%'}"/>
         </div>
 
     </div>
@@ -94,9 +95,7 @@
 
     <br>
     <p-panel header="Viewings" [toggleable]="true" [collapsed]="true">
-        <p class="m-0">
-            {{currentProperty.description}}
-        </p>
+        <app-viewing [currentPropertyId]="currentPropertyId"></app-viewing>
     </p-panel>
 
 

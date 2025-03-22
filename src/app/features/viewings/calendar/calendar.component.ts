@@ -51,6 +51,9 @@ export class CalendarComponent implements OnInit {
     start: null
 
    };
+
+   @Input() currentPropertyId!: number;
+   @Input() currentPropertyOwnerId!: number;
    
   constructor(private messageService: MessageService,
     private viewingService: ViewingService) { 
@@ -71,6 +74,7 @@ export class CalendarComponent implements OnInit {
   }
 
   saveViewing(){
+    this.viewing.propertyId = this.currentPropertyId;
     this.viewingService.createViewing(this.viewing).subscribe({
       next: (response) => {  
         if(response > 0){

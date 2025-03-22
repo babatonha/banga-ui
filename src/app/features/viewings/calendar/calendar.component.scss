@@ -1,8 +1,10 @@
 @media (max-width: 768px) {
-  .fc-toolbar-title {
-    font-size: 16px; /* Adjust title font size */
+  // .fc-toolbar-title {
+  //   font-size: 16px; /* Adjust title font size */
+  // }
+  .fc .fc-toolbar-title{
+    font-size: 1rem; 
   }
-
   .fc-prev-button, .fc-next-button, .fc-today-button {
     display: none; /* Hide navigation buttons on mobile */
   }
@@ -17,4 +19,5 @@
 .p-dialog{
   height: 90% !important;
 }
+
 

@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { BaseService } from "./base.service";
 import { Offer } from "../_models/offer";
+import { PaginatedResult } from "../_models/paginatedResult";
 
 
 @Injectable({
@@ -22,8 +23,8 @@ import { Offer } from "../_models/offer";
         return this.http.get<Offer>(`${this.baseService.baseUrl}PropertyOffer/${propertyId}/${buyerId}`);
     }
 
-    getPropertyOffers(propertyId: number){
-        return this.http.get<Offer[]>(`${this.baseService.baseUrl}PropertyOffer/${propertyId}`);
+    getPropertyOffers(propertyId: number, pageNumber: number, pageSize: number){
+        return this.http.get<PaginatedResult<Offer>>(`${this.baseService.baseUrl}PropertyOffer/${propertyId}/${pageNumber}/${pageSize}`);
     }
 
     getUserOffers(userId: number){

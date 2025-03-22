@@ -1,9 +1,12 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CalendarComponent } from '../calendar/calendar.component';
 import { CommonModule } from '@angular/common';
 import { ViewingService } from '../../../_services/viewing.service';
 import { MessageService } from 'primeng/api';
 import { ViewingStatus } from '../../../_enums/viewingStatus';
+import { ActivatedRoute, Router } from '@angular/router';
+import { PropertyService } from '../../../_services/property.service';
+import { PropertyDetails } from '../../../_models/propertyDetails';
 
 @Component({
   selector: 'app-viewing',
@@ -19,15 +22,34 @@ import { ViewingStatus } from '../../../_enums/viewingStatus';
 export class ViewingComponent implements OnInit{
   eventList: any;
   eventsLoaded: boolean = false;
+  @Input() currentPropertyId!: number;
+  currentPropertyOwnerId!: number;
+
+
   constructor( private messageService: MessageService,
+    private route: ActivatedRoute,     
+    private propertyService: PropertyService,
     private viewingService: ViewingService, ) {}
 
   ngOnInit() {
-    this.getEvents();
+     this.getCurrentPropertyData();
   }
 
-  getEvents(){
-    this.viewingService.getPropertyViewingsByUserId(1,1).subscribe({
+  getCurrentPropertyData(){
+    this.propertyService.getPropertyById(this.currentPropertyId).subscribe({
+      next: (response: PropertyDetails) => {
+        if(response){
+          this.currentPropertyOwnerId = response.property.ownerId;
+          if(this.currentPropertyId && this.currentPropertyOwnerId )
+            this.getEvents(this.currentPropertyOwnerId, this.currentPropertyId );
+        }
+      }
+    });
+  }
+
+
+  getEvents(ownerId: number, propertyId: number){
+    this.viewingService.getPropertyViewingsByUserId(ownerId,propertyId).subscribe({
       next: (response) => {  
         if(response){
           this.eventList = response.map((updated) =>{

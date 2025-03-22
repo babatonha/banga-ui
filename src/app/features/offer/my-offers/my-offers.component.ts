@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PaginatorModule } from 'primeng/paginator';
 import { TagModule } from 'primeng/tag';
@@ -14,6 +14,7 @@ import { OfferService } from '../../../_services/offer.service';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { TableModule } from 'primeng/table';
+import { NewOfferComponent } from '../new-offer/new-offer.component';
 
 @Component({
   selector: 'app-my-offers',
@@ -37,11 +38,13 @@ export class MyOffersComponent implements OnInit {
   searchFilter: SearchFilter = DefaultSearchFilter.getDefaultSearchFilter();
   //loggedInUser!: User;
   pageSize: number = 5;
-  pageIndex: number = 0;
+  pageIndex: number = 1;
   totalCount: number = 0;
   first: number = 0;
   searchTerm: string = '';
   currentPropertyId: number = 1;
+
+  @ViewChild(NewOfferComponent)  newOfferComponent!: NewOfferComponent;
 
   constructor(    
     private offerService: OfferService,
@@ -60,14 +63,17 @@ export class MyOffersComponent implements OnInit {
   }
 
   onPageChange(event: any) {
-    // this.pageIndex = event.page + 1;
-    // this.pageSize = event.rows;
+    this.pageIndex = event.page + 1;
+    this.pageSize = event.rows;
 
-    // this.getAllProperties(this.loggedInUser.id);
+    this.loadOffers();
 }
 
 navigateToPageWithId(url: string, id: number){
+ // this.newOfferComponent.offerRecord = this.offerDataSource.filter(x => x.propertyOfferId === id)[0];
   this.router.navigate([`${url}`,id]);
+
+  
 }
 
 navigateToNewPage(url: string){
@@ -75,11 +81,10 @@ navigateToNewPage(url: string){
 }
 
 loadOffers(){
-  this.offerService.getPropertyOffers(this.currentPropertyId).subscribe({
+  this.offerService.getPropertyOffers(this.currentPropertyId, this.pageIndex, this.pageSize).subscribe({
     next: response => {
-      this.offerDataSource = response;
-      console.log(this.offerDataSource);
-     // this.totalCount = response.totalCount;
+      this.offerDataSource = response.result;
+      this.totalCount = response.totalCount;
     }, error: error => {
       this.offerDataSource = [];
       this.totalCount  = 0;

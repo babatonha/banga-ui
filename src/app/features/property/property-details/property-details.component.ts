@@ -5,7 +5,7 @@ import { PanelModule } from 'primeng/panel';
 import { PropertyDetails } from '../../../_models/propertyDetails';
 import { PropertyPhoto } from '../../../_models/propertyPhoto';
 import { User } from '../../../_models/user';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PropertyService } from '../../../_services/property.service';
 import { MessageService } from 'primeng/api';
 import { AccountService } from '../../../_services/account.service';
@@ -16,6 +16,8 @@ import { PropertyPhotoService } from '../../../_services/propertyPhoto.service';
 import { ImageModule } from 'primeng/image';
 import { ButtonModule } from 'primeng/button';
 import { MyOffersComponent } from '../../offer/my-offers/my-offers.component';
+import { CalendarComponent } from "../../viewings/calendar/calendar.component";
+import { ViewingComponent } from '../../viewings/viewing/viewing.component';
 
 @Component({
   selector: 'app-property-details',
@@ -23,14 +25,15 @@ import { MyOffersComponent } from '../../offer/my-offers/my-offers.component';
   styleUrls: ['./property-details.component.scss'],
   standalone: true,
   imports: [
-    GalleriaModule, 
+    GalleriaModule,
     PanelModule,
     CardModule,
     ImageModule,
     ChipModule,
     ButtonModule,
-    MyOffersComponent
-  ],
+    MyOffersComponent,
+    ViewingComponent
+],
   providers: [MessageService]
 })
 export class PropertyDetailsComponent implements OnInit {
@@ -58,7 +61,7 @@ export class PropertyDetailsComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,     
     private propertyService: PropertyService,
-    private messageService: MessageService,
+    private router: Router,
     private propertyPhotoService: PropertyPhotoService,
     private accountService: AccountService) { }
 
@@ -84,6 +87,14 @@ export class PropertyDetailsComponent implements OnInit {
       }
     })
   }
+
+  navigateToNewPage(url: string){
+    this.router.navigate([`${url}`]);
+   }
+
+   navigateToPageWithId(url: string, id: number){
+     this.router.navigate([`${url}`,id]);
+   }
 
   getPropertyPhotos(propertyId: number){
     this.propertyPhotoService.getPropertyPhotos(propertyId).subscribe({

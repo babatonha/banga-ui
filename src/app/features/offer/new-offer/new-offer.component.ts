@@ -36,7 +36,7 @@ import { Router } from '@angular/router';
 })
 export class NewOfferComponent implements OnInit {
     form!: FormGroup;
-    offerRecord!: Offer;
+    @Input() offerRecord!: Offer;
     @Input() currPropertyId: number = 0;
     @Input() currLoggedUserId: number = 0;
 
@@ -74,7 +74,7 @@ export class NewOfferComponent implements OnInit {
   }
 
   backClick(){
-
+    window.history.back();
   }
 
   loadNewOffer(){
