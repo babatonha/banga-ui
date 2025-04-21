@@ -1,23 +1,101 @@
-@media (max-width: 768px) {
-  // .fc-toolbar-title {
-  //   font-size: 16px; /* Adjust title font size */
-  // }
-  .fc .fc-toolbar-title{
-    font-size: 1rem; 
-  }
-  .fc-prev-button, .fc-next-button, .fc-today-button {
-    display: none; /* Hide navigation buttons on mobile */
-  }
+// @media (max-width: 768px) {
+//   // .fc-toolbar-title {
+//   //   font-size: 16px; /* Adjust title font size */
+//   // }
+//   .fc .fc-toolbar-title{
+//     font-size: 1rem; 
+//   }
+//   .fc-prev-button, .fc-next-button, .fc-today-button {
+//     display: none; /* Hide navigation buttons on mobile */
+//   }
 
-  .fc-custom-button {
-    display: block; /* Ensure custom button is visible */
-    font-size: 14px;
-    padding: 5px 10px;
+//   .fc-custom-button {
+//     display: block; /* Ensure custom button is visible */
+//     font-size: 14px;
+//     padding: 5px 10px;
+//   }
+// }
+
+// .p-dialog{
+//   height: 90% !important;
+// }
+
+
+.button-end {
+  display: flex;
+  justify-content: flex-end;
+}
+
+mat-form-field {
+  display: block;
+  margin-left: 5px;
+  margin-right: 5px;
+  max-width: 350px;
+}
+
+.fc {
+  max-width: calc(100vw - 100px);
+  padding: 5px;
+  margin: 0 auto;
+  max-height: calc(100vh - 200px);
+}
+
+::ng-deep .fc .fc-bg-event {
+  opacity: 1;
+}
+
+@media (max-width: 850px) {
+  .fc {
+      max-width: calc(100vw - 18px);
+      padding: 5px;
+      margin: 0 auto;
+      height: calc(100vh - 181px);
   }
 }
 
-.p-dialog{
-  height: 90% !important;
+
+
+.event-title {
+  font-weight: bold;
+  margin-right: 2px;
 }
 
+.event-dot {
+  border: 1px solid #569ee1;
+  border-radius: 8px;
+  box-sizing: content-box;
+  display: inline-block;
+  height: 8px;
+  width: 8px;
+  margin: 4px;
+  background-color: #569ee1;
+}
+
+.event-subtitle {
+  font-weight: normal;
+  font-style: italic;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.event-small {
+  font-size: small;
+  text-overflow: clip;
+}
+
+.event-time {
+  height: 20px;
+  min-width: 30px;
+  background-color: #033c73;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: var(--fc-small-font-size);
+  color: #ffffff;
+  margin-right: 5px;
+  padding: 4px;
+}
 

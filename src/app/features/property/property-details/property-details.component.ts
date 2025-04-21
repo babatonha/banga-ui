@@ -39,7 +39,7 @@ import { ViewingComponent } from '../../viewings/viewing/viewing.component';
 export class PropertyDetailsComponent implements OnInit {
 
   propertyPhotos: PropertyPhoto[] = [];
-  currentPropertyId!: number;
+  currentPropertyId: number = 1;
   loggedInUser!: User;
   currentProperty!: Property;
   currentAmenities: Amenities[] = [];

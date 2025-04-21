@@ -1,5 +1,14 @@
 
-<full-calendar [options]="calendarOptions"></full-calendar>
+<full-calendar 
+    #calendar
+    [options]="calendarSettings" 
+    [events]="calendarViewings">
+
+    <ng-template #eventContent let-arg>
+        <span class="event-tile event-small">{{arg.timeText}}</span>
+        <span class="event-subtile event-small">{{arg.event.title}}</span>
+    </ng-template>
+</full-calendar>
 
 
 <p-dialog 

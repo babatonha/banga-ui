@@ -22,7 +22,7 @@ import { PropertyDetails } from '../../../_models/propertyDetails';
 export class ViewingComponent implements OnInit{
   eventList: any;
   eventsLoaded: boolean = false;
-  @Input() currentPropertyId!: number;
+  @Input() currentPropertyId: number = 1;
   currentPropertyOwnerId!: number;
 
 

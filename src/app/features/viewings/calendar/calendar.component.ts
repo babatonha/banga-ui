@@ -1,8 +1,10 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit, ViewChild } from '@angular/core';
-import {  FullCalendarModule } from '@fullcalendar/angular'; 
-import { CalendarOptions, EventClickArg, EventSourceInput } from '@fullcalendar/core'; 
+import {  FullCalendarComponent, FullCalendarModule } from '@fullcalendar/angular'; 
+import { CalendarOptions, EventClickArg, EventInput, EventSourceInput } from '@fullcalendar/core'; 
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import listPlugin from '@fullcalendar/list';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -38,7 +40,7 @@ export class CalendarComponent implements OnInit {
    hourFormat: string  = "12";
    notes: string | undefined;
    minDate: Date = new Date();
-   @Input() eventList!: any;
+   @Input() eventList : Viewing[] = [];
    calendarOptions!: CalendarOptions;
    viewing: Viewing = {
     id: 0,
@@ -52,13 +54,70 @@ export class CalendarComponent implements OnInit {
 
    };
 
-   @Input() currentPropertyId!: number;
+   calendarViewings: EventInput[] = [];
+
+   @Input() currentPropertyId: number = 1;
    @Input() currentPropertyOwnerId!: number;
+   @ViewChild('calendar') calendar?: FullCalendarComponent
    
   constructor(private messageService: MessageService,
     private viewingService: ViewingService) { 
 
   }
+
+  calendarSettings: CalendarOptions = {
+    plugins: [
+      interactionPlugin,
+      dayGridPlugin,
+      timeGridPlugin,
+      listPlugin,
+    ],
+    headerToolbar: {
+      left: 'prev next today',
+      center: 'title',
+      right: 'dayGridMonth timeGridWeek timeGridDay listWeek'
+    },
+    buttonText: {
+      today: 'Today',
+      month: 'Month',
+      week: 'Week',
+      day: 'Day',
+      list: 'List'
+    },
+    initialView: 'timeGridWeek',
+    weekends: false,
+    editable: true,
+    views: {
+      timeGridDay: {
+        slotDuration: '00:15:00',
+        slotMinTime: '07:00:00',
+        slotMaxTime: '19:00:00'
+      },
+      timeGridWeek: {
+        slotDuration: '00:15:00',
+        slotMinTime: '07:00:00',
+        slotMaxTime: '19:00:00'
+      }
+    },
+
+    selectable: true,
+    selectMirror: true,
+    dayMaxEvents: true,
+    // select: this.handleDateSelect.bind(this),
+    // eventClick: this.handleEventClick.bind(this),
+    // eventDrop: this.handleEventDrop.bind(this),
+    // eventResize: this.handleResize.bind(this),
+    // datesSet: this.handleDateChange.bind(this),
+  };
+
+
+
+
+
+
+
+
+
 
   ngOnInit() {
    this.loadCalendar();
@@ -92,42 +151,60 @@ export class CalendarComponent implements OnInit {
 
 
   loadCalendar(){
-    this.calendarOptions = {
-      initialView: 'dayGridMonth',
-      headerToolbar: {
-        left: this.isMobile ? 'customButton' : 'customButton',
-        center: 'title',
-        right: this.isMobile ? 'dayGridMonth' : 'prev,dayGridMonth,dayGridWeek,dayGridDay,next'
-      },
-      customButtons: {
-        customButton: {
-          text: 'New',
-          click: () => {
-            this.visible = true;
-          }
-        }
-      },
+    this.eventList.forEach(x => {
+
+
+      this.calendarViewings?.push(     
+        {
+        id:'21',
+        title: x.title ?? 'test',
+        start: new Date('2025-04-25 14:34:15.000'),
+        end: new Date('2025-04-25 14:34:15.000'),
+        backgroundColor: 'green',
+        borderColor: 'red',
+        textColor: 'black',
+      });
+    });
+
+
+
+
+    // this.calendarOptions = {
+    //   initialView: 'dayGridMonth',
+    //   headerToolbar: {
+    //     left: this.isMobile ? 'customButton' : 'customButton',
+    //     center: 'title',
+    //     right: this.isMobile ? 'dayGridMonth' : 'prev,dayGridMonth,dayGridWeek,dayGridDay,next'
+    //   },
+    //   customButtons: {
+    //     customButton: {
+    //       text: 'New',
+    //       click: () => {
+    //         this.visible = true;
+    //       }
+    //     }
+    //   },
       
-      plugins: [dayGridPlugin, interactionPlugin],
-      events:this.eventList,
-      eventClick: (e:EventClickArg ) => {
-        // this.viewing = {
-        //   id: parseInt(e.event.id),
-        //   propertyId : 0,
-        //   title: e.event.title,
-        //   allocatedTo : 0,
-        //   note : e.event.note,
-        //   viewingStatus : 'Available',
-        //   backgroundColor: 'green',
-        //   start: null
-        // }
-        // console.log(this.eventList)
-        console.log(e.event)
-        //this.viewing = this.eventList.find((x: any) => x.id === e.event.id);
-        console.log(this.viewing );
-        this.visible = true;
-      }
-    };
+    //   plugins: [dayGridPlugin, interactionPlugin],
+    //   events:this.eventList,
+    //   eventClick: (e:EventClickArg ) => {
+    //     // this.viewing = {
+    //     //   id: parseInt(e.event.id),
+    //     //   propertyId : 0,
+    //     //   title: e.event.title,
+    //     //   allocatedTo : 0,
+    //     //   note : e.event.note,
+    //     //   viewingStatus : 'Available',
+    //     //   backgroundColor: 'green',
+    //     //   start: null
+    //     // }
+    //     // console.log(this.eventList)
+    //     console.log(e.event)
+    //     //this.viewing = this.eventList.find((x: any) => x.id === e.event.id);
+    //     console.log(this.viewing );
+    //     this.visible = true;
+    //   }
+    // };
 
   }
 

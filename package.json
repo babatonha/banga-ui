@@ -21,6 +21,8 @@
     "@fullcalendar/angular": "^6.1.15",
     "@fullcalendar/daygrid": "^6.1.15",
     "@fullcalendar/interaction": "^6.1.15",
+    "@fullcalendar/list": "^6.1.17",
+    "@fullcalendar/timegrid": "^6.1.17",
     "@microsoft/signalr": "^8.0.7",
     "primeflex": "^3.3.1",
     "primeicons": "^7.0.0",

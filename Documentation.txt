@@ -1,8 +1,6 @@
 Viewings
 ------------
---A user should be able to create viewings for their property.
+--A user should be able to create/schedule viewings for their property.
 --User can schedule times for the property
-
-
-Get events by propertyId
-Get current logged in user
+--Get events by property Id, we use the property id to get the owner if we need to
+--

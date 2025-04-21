@@ -42,7 +42,7 @@ import { StepTwoProperties } from '../../../_models/stepTwo';
 })
 export class EditPropertyComponent implements OnInit {
 
-  currentPropertyId!: number;
+  currentPropertyId: number = 1;
   newRecord!: Property;
   myForm!: FormGroup;
   cities: City[] = [];
